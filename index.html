@@ -3,9 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<script>document.documentElement.className = "js";</script>
-<!-- TODO: the title and the description/og: tags below are what WhatsApp shows in the link preview.
-     Link previews don't run JavaScript, so edit these by hand as well as CONFIG. -->
+<script>
+  document.documentElement.className = "js";
+  // All wedding details live in wedding.json (next to this file). Start loading it straight away.
+  window.__weddingData = fetch("wedding.json", { cache: "no-cache" }).then(function (r) {
+    if (!r.ok) throw new Error("wedding.json could not be loaded (HTTP " + r.status + ")");
+    return r.text();
+  });
+</script>
+<!-- EDIT FOR EACH WEDDING: the <title>, description and og: tags below are what WhatsApp shows
+     in the link preview. Link previews don't run JavaScript, so they can't come from wedding.json. -->
 <title>Sushmit &amp; Manaswita · Wedding Celebrations</title>
 <meta name="description" content="Schedule, venues, dress codes and calendar invites for the wedding celebrations of Sushmit Shekhar &amp; Manaswita Datta, 14–21 February 2027, Jamshedpur &amp; Agartala.">
 <meta property="og:title" content="Sushmit &amp; Manaswita · Wedding Celebrations">
@@ -384,6 +391,10 @@
   html:is([lang="hi"], [lang="bn"]) :is(.overline, .cd-caption, .cd-l, .ev-meta, .fact dt, .ev-mon, .ev-wd, .f-date) { font-size: 14px; }
   html:is([lang="hi"], [lang="bn"]) .pill { font-size: 13px; padding-top: 2px; }
 
+  .load-error { position: fixed; left: 16px; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 60; display: grid; gap: 4px;
+    max-width: 460px; margin: 0 auto; padding: 16px 18px; border-radius: 16px; background: #22160F; color: #FFF4E0; font: 15px/1.45 var(--sans);
+    box-shadow: 0 18px 36px -12px rgba(0,0,0,.5); }
+
   /* ============ Toast ============ */
   .toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom)); z-index: 50; width: min(92vw, 440px); padding: 14px 18px;
     border-radius: 16px; background: #22160F; color: #FFF4E0; font-size: 15px; line-height: 1.45; box-shadow: 0 18px 36px -12px rgba(0,0,0,.5);
@@ -665,125 +676,11 @@
 
 <script>
 /* =====================================================================
-   WEDDING DETAILS — edit everything here. Layout code below reads it.
-   Times are local India time (Asia/Kolkata), 24-hour "HH:MM".
-   If an event ends after midnight, just give the end time (e.g. "00:30");
-   it is treated as the next day automatically.
+   The design and code for the wedding page. All wedding details
+   (names, dates, venues, translations …) live in wedding.json —
+   see README.md for every field.
    ===================================================================== */
-const CONFIG = {
-  // Text can be plain ("Haldi") or in three languages ({ en: "...", hi: "...", bn: "..." }).
-  // If a language is missing, English is shown.
-  couple: [
-    { en: "Sushmit",   hi: "सुश्मित",  bn: "সুস্মিত" },
-    { en: "Manaswita", hi: "मनस्विता", bn: "মনস্বিতা" }
-  ],                                                 // Sushmit Shekhar & Manaswita Datta (first names shown on the page)
-  blessing: "॥ श्री गणेशाय नमः ॥",                    // Line above the names (same in every language), or "" to hide
-  hashtag: "#SushmitWedsManaswita",                  // TODO: confirm the wedding hashtag
-  city: { en: "Jamshedpur & Agartala", hi: "जमशेदपुर और अगरतला", bn: "জামশেদপুর ও আগরতলা" },
-  welcome: "",                                       // Optional: a short welcome line under the arch ("" hides it)
-  siteUrl: "https://saumyakumar.github.io/wedding/", // Live page URL, used for the QR code and WhatsApp share. Change only if the page moves.
-  photoAlbumUrl: "https://photos.app.goo.gl/REPLACE-WITH-YOUR-ALBUM-LINK", // TODO: Google Photos shared-album link (Share → Create link)
-  shareMessage: {                                    // WhatsApp message; {url} becomes the page link
-    en: "You're invited! 💐 Sushmit & Manaswita's wedding celebrations, 14–21 February 2027 in Jamshedpur & Agartala. Schedule, venues, dress codes and calendar invites: {url}",
-    hi: "आप सादर आमंत्रित हैं! 💐 सुश्मित & मनस्विता का विवाह समारोह, 14–21 फ़रवरी 2027, जमशेदपुर और अगरतला। कार्यक्रम, स्थान, पहनावा और कैलेंडर: {url}",
-    bn: "আপনাকে সাদর আমন্ত্রণ! 💐 সুস্মিত & মনস্বিতার বিবাহ অনুষ্ঠান, 14–21 ফেব্রুয়ারি 2027, জামশেদপুর ও আগরতলা। অনুষ্ঠানসূচি, স্থান, পোশাক ও ক্যালেন্ডার: {url}"
-  },
-
-  parents: [                                         // "With the blessings of" block (shown in this order)
-    { label: { en: "Sushmit's parents", hi: "सुश्मित के माता-पिता", bn: "সুস্মিতের বাবা-মা" },
-      names: [ { en: "Chandra Shekhar Prasad", hi: "चंद्र शेखर प्रसाद", bn: "চন্দ্র শেখর প্রসাদ" },
-               { en: "Indira Datta",           hi: "इंदिरा दत्ता",      bn: "ইন্দিরা দত্ত" } ] },
-    { label: { en: "Manaswita's parents", hi: "मनस्विता के माता-पिता", bn: "মনস্বিতার বাবা-মা" },
-      names: [ { en: "Bhaskar Datta",          hi: "भास्कर दत्ता",       bn: "ভাস্কর দত্ত" },
-               { en: "Rama Sutradhar Datta",   hi: "रमा सूत्रधार दत्ता",  bn: "রমা সূত্রধর দত্ত" } ] }
-  ],
-
-  contacts: [                                        // Add more as { name, role, phone } — phone with +91
-    { name: { en: "Sushmit Shekhar", hi: "सुश्मित शेखर", bn: "সুস্মিত শেখর" },
-      role: { en: "Groom", hi: "दूल्हा", bn: "বর" },
-      phone: "+91 91996 94008" }
-  ],
-
-  // Times: give "start" (24-hour). "end" is optional — leave it out to show "7:00 PM onwards"
-  // (calendar entries then last 4 hours). Add end: "23:00" to show a time range instead.
-  // accent  = the function's colour on its card.
-  // palette = optional colour dots shown with the dress code ([] hides them).
-  events: [
-    {
-      name: { en: "Mehendi", hi: "मेहंदी", bn: "মেহেন্দি" },
-      date: "2027-02-14", start: "19:00",
-      venue: { en: "F Road, Sonari", hi: "एफ़ रोड, सोनारी", bn: "এফ রোড, সোনারি" },
-      address: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=22.818944%2C86.1621792",
-      dressCode: { en: "Greens, pinks and festive florals",                         // TODO: confirm dress code
-                   hi: "हरे, गुलाबी और फूलों वाले रंग-बिरंगे कपड़े",
-                   bn: "সবুজ, গোলাপি আর ফুলেল রঙিন সাজ" },
-      note: { en: "Henna artists for every guest, chaat counters and folk music.",
-              hi: "हर मेहमान के लिए मेहंदी, चाट के स्टॉल और लोक संगीत।",
-              bn: "প্রত্যেক অতিথির জন্য মেহেন্দি শিল্পী, চাটের স্টল আর লোকসংগীত।" },
-      accent: "#4F7A3A", palette: ["#4F7A3A", "#9CC17B", "#E66F9B"]
-    },
-    {
-      name: { en: "Sangeet & Ring Ceremony", hi: "संगीत और सगाई", bn: "সঙ্গীত ও আংটি বদল" },
-      date: "2027-02-15", start: "19:00",
-      venue: { en: "F Road, Sonari", hi: "एफ़ रोड, सोनारी", bn: "এফ রোড, সোনারি" },
-      address: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=22.818944%2C86.1621792",
-      dressCode: { en: "Glam Indo-western — sequins and shimmer welcome",           // TODO: confirm dress code
-                   hi: "ग्लैमरस इंडो-वेस्टर्न — चमक-दमक का स्वागत है",
-                   bn: "ঝলমলে ইন্দো-ওয়েস্টার্ন — চুমকি আর চমক স্বাগত" },
-      note: { en: "The ring ceremony, then family performances, dinner and dancing.",
-              hi: "सगाई की रस्म, फिर परिवार की प्रस्तुतियाँ, डिनर और नाच-गाना।",
-              bn: "আংটি বদল, তারপর পরিবারের পরিবেশনা, নৈশভোজ আর নাচ-গান।" },
-      accent: "#B0306A", palette: ["#B0306A", "#2B2B6E", "#D9B45A"]
-    },
-    {
-      name: { en: "Haldi", hi: "हल्दी", bn: "গায়ে হলুদ" },
-      date: "2027-02-16", start: "10:00",
-      venue: { en: "F Road, Sonari", hi: "एफ़ रोड, सोनारी", bn: "এফ রোড, সোনারি" },
-      address: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=22.818944%2C86.1621792",
-      dressCode: { en: "Shades of yellow — and clothes you don't mind getting turmeric on",   // TODO: confirm dress code
-                   hi: "पीले रंग के कपड़े — ऐसे, जिन पर हल्दी लगने की फ़िक्र न हो",
-                   bn: "হলুদ রঙের পোশাক — এমন, যাতে হলুদ লাগলেও চিন্তা নেই" },
-      note: { en: "Brunch will be served. Bring a spare outfit if you plan to join the fun.",
-              hi: "ब्रंच की व्यवस्था रहेगी। मस्ती में शामिल होना हो तो एक जोड़ी कपड़े साथ रखें।",
-              bn: "ব্রাঞ্চের ব্যবস্থা থাকবে। মজায় যোগ দিতে চাইলে এক সেট বাড়তি জামা সঙ্গে আনুন।" },
-      accent: "#E3A008", palette: ["#F5C518", "#F9E08B", "#FFFFFF"]
-    },
-    {
-      name: { en: "Wedding", hi: "विवाह", bn: "বিয়ে" },
-      date: "2027-02-16", start: "19:00",
-      venue: { en: "Beldih Golf Course", hi: "बेलडीह गोल्फ़ कोर्स", bn: "বেলডি গলফ কোর্স" },
-      address: { en: "Sonari, Jamshedpur, Jharkhand", hi: "सोनारी, जमशेदपुर, झारखंड", bn: "সোনারি, জামশেদপুর, ঝাড়খণ্ড" },
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=22.8091068%2C86.1737869",
-      dressCode: { en: "Traditional Indian — sarees, lehengas, sherwanis, bandhgalas",        // TODO: confirm dress code
-                   hi: "पारंपरिक भारतीय — साड़ी, लहंगा, शेरवानी, बंदगला",
-                   bn: "ঐতিহ্যবাহী ভারতীয় — শাড়ি, লেহেঙ্গা, শেরওয়ানি, বন্ধগলা" },
-      note: { en: "The baraat arrives in the evening, followed by the pheras and dinner.",
-              hi: "शाम को बारात का स्वागत, फिर फेरे और भोजन।",
-              bn: "সন্ধ্যায় বরযাত্রীদের আগমন, তারপর সাত পাক আর নৈশভোজ।" },
-      accent: "#A51C30", palette: ["#A51C30", "#E07B39", "#D4AF37"]
-    },
-    {
-      name: { en: "Reception", hi: "रिसेप्शन", bn: "রিসেপশন" },
-      date: "2027-02-21", start: "19:00",
-      venue: { en: "The Parkline Hotel", hi: "द पार्कलाइन होटल", bn: "দ্য পার্কলাইন হোটেল" },
-      address: { en: "Agartala, Tripura", hi: "अगरतला, त्रिपुरा", bn: "আগরতলা, ত্রিপুরা" },
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=23.8341933%2C91.2777088",
-      dressCode: { en: "Evening formal — suits, gowns or your finest saree",                  // TODO: confirm dress code
-                   hi: "शाम का औपचारिक पहनावा — सूट, गाउन या आपकी सबसे सुंदर साड़ी",
-                   bn: "সন্ধ্যার আনুষ্ঠানিক পোশাক — স্যুট, গাউন বা আপনার সেরা শাড়ি" },
-      note: { en: "Dinner, toasts and dancing. Ask us if you need a drop to the station or airport the next day.",
-              hi: "डिनर, शुभकामनाएँ और नाच-गाना। अगले दिन स्टेशन या एयरपोर्ट छोड़ने की ज़रूरत हो तो हमें बताएँ।",
-              bn: "নৈশভোজ, শুভেচ্ছা আর নাচ-গান। পরদিন স্টেশন বা বিমানবন্দরে পৌঁছনোর দরকার হলে আমাদের জানান।" },
-      accent: "#2F4A7A", palette: ["#1F2A44", "#2F4A7A", "#C0C0C8"]
-    }
-  ]
-};
-/* ======================= end of wedding details ======================= */
-
-(function () {
+function startWedding(CONFIG) {
   "use strict";
 
   const QR_LIB = {
@@ -1630,6 +1527,48 @@ const CONFIG = {
 
   // exposed for testing in the browser console
   window.__wedding = { buildICS: (all) => buildICS(all ? events : [events[0]]), events, openCalendar, setLang, lang: () => LANG };
+}
+
+/* ---------- load wedding.json, check it, then build the page ---------- */
+(function boot() {
+  function fail(detail) {
+    console.error("[wedding] " + detail);
+    var box = document.createElement("div");
+    box.className = "load-error"; box.setAttribute("role", "alert");
+    box.innerHTML = "<strong>Couldn’t load the wedding details.</strong><span>Please refresh the page. If it keeps happening, let the couple know.</span>";
+    document.body.appendChild(box);
+  }
+  function check(d) {
+    var problems = [];
+    if (!d || typeof d !== "object") problems.push("the file must contain one { … } object");
+    else {
+      if (!Array.isArray(d.couple) || d.couple.length !== 2) problems.push('"couple" must list exactly two names');
+      if (!Array.isArray(d.events) || !d.events.length) problems.push('"events" must list at least one function');
+      else d.events.forEach(function (ev, i) {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(ev.date || "")) problems.push("events[" + i + '].date must look like "2027-02-14"');
+        if (!/^\d{1,2}:\d{2}$/.test(ev.start || "")) problems.push("events[" + i + '].start must look like "19:00"');
+        if (ev.end && !/^\d{1,2}:\d{2}$/.test(ev.end)) problems.push("events[" + i + '].end must look like "23:00"');
+        if (!ev.name) problems.push("events[" + i + "].name is missing");
+      });
+    }
+    if (problems.length) throw new Error("wedding.json: " + problems.join("; "));
+  }
+  if (location.protocol === "file:") {
+    window.__weddingData.catch(function () {});
+    fail("wedding.json can't be read when the page is opened as a file. In this folder run: python3 -m http.server — then open http://localhost:8000/");
+    return;
+  }
+  window.__weddingData.then(function (text) {
+    var data;
+    try { data = JSON.parse(text); }
+    catch (e) {
+      var m = /position (\d+)/.exec(e.message), where = "";
+      if (m) { var before = text.slice(0, +m[1]).split("\n"); where = " at line " + before.length + ", column " + (before[before.length - 1].length + 1); }
+      throw new Error("wedding.json has a typo" + where + ": " + e.message);
+    }
+    check(data);
+    startWedding(data);
+  }).catch(function (e) { fail(String((e && e.message) || e)); });
 })();
 </script>
 </body>

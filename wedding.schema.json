@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "wedding.schema.json",
+  "title": "Wedding page details",
+  "description": "Everything the wedding page shows. Edit wedding.json; index.html reads it. See README.md.",
+  "type": "object",
+  "required": ["couple", "siteUrl", "events"],
+  "additionalProperties": false,
+  "definitions": {
+    "text": {
+      "description": "Plain text, or the same text in English / Hindi / Bengali. If a language is missing, English is shown.",
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "object",
+          "required": ["en"],
+          "additionalProperties": false,
+          "properties": {
+            "en": { "type": "string", "description": "English" },
+            "hi": { "type": "string", "description": "हिन्दी (Hindi)" },
+            "bn": { "type": "string", "description": "বাংলা (Bengali)" }
+          }
+        }
+      ]
+    },
+    "colour": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$", "description": "A colour like \"#A51C30\"." },
+    "url": { "type": "string", "pattern": "^https?://", "description": "A full web link starting with https://" }
+  },
+  "properties": {
+    "$schema": { "type": "string" },
+    "couple": {
+      "description": "The two first names, in the order they appear (\"Sushmit & Manaswita\"). The first gets the gold thread, the second the red thread.",
+      "type": "array", "minItems": 2, "maxItems": 2,
+      "items": { "$ref": "#/definitions/text" }
+    },
+    "blessing": { "$ref": "#/definitions/text", "description": "Line above the names, e.g. \"॥ श्री गणेशाय नमः ॥\". Use \"\" to hide it." },
+    "hashtag": { "type": "string", "description": "Wedding hashtag, e.g. \"#SushmitWedsManaswita\". Use \"\" to hide it." },
+    "city": { "$ref": "#/definitions/text", "description": "Shown under the dates, e.g. \"Jamshedpur & Agartala\"." },
+    "welcome": { "$ref": "#/definitions/text", "description": "Optional short welcome line under the arch. Use \"\" to hide it." },
+    "siteUrl": { "$ref": "#/definitions/url", "description": "The live page link. Used for the QR code, WhatsApp sharing and calendar entries." },
+    "photoAlbumUrl": { "$ref": "#/definitions/url", "description": "Shared photo album link (Google Photos → Share → Create link)." },
+    "shareMessage": { "$ref": "#/definitions/text", "description": "WhatsApp message. {url} is replaced with the page link." },
+    "parents": {
+      "description": "The \"With the blessings of\" section. Leave the list empty to hide it.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["label", "names"],
+        "additionalProperties": false,
+        "properties": {
+          "label": { "$ref": "#/definitions/text", "description": "e.g. \"Sushmit's parents\"" },
+          "names": { "type": "array", "minItems": 1, "items": { "$ref": "#/definitions/text" }, "description": "One name per line." }
+        }
+      }
+    },
+    "contacts": {
+      "description": "People guests can call or WhatsApp.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "phone"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "$ref": "#/definitions/text" },
+          "role": { "$ref": "#/definitions/text", "description": "e.g. \"Groom\", \"Bride's brother\"" },
+          "phone": { "type": "string", "pattern": "^\\+?[0-9 ()-]{6,}$", "description": "With country code, e.g. \"+91 91996 94008\"." }
+        }
+      }
+    },
+    "events": {
+      "description": "The functions. They are shown in date order automatically. The one named Wedding / Vivah / Shaadi gets the gathbandhan knot.",
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "date", "start"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "$ref": "#/definitions/text", "description": "e.g. \"Haldi\". The English name also picks the card's little drawing (haldi, mehendi, sangeet, wedding, reception)." },
+          "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "Day of the function, \"YYYY-MM-DD\" (India time)." },
+          "start": { "type": "string", "pattern": "^\\d{1,2}:\\d{2}$", "description": "Start time, 24-hour \"HH:MM\" (India time)." },
+          "end": { "type": "string", "pattern": "^\\d{1,2}:\\d{2}$", "description": "Optional end time. Leave out to show \"7:00 PM onwards\" (calendar entries then last 4 hours). After midnight is fine, e.g. \"00:30\"." },
+          "venue": { "$ref": "#/definitions/text" },
+          "address": { "$ref": "#/definitions/text" },
+          "mapsUrl": { "$ref": "#/definitions/url", "description": "Google Maps link for the Directions button, e.g. https://www.google.com/maps/search/?api=1&query=22.81,86.16" },
+          "dressCode": { "$ref": "#/definitions/text" },
+          "note": { "$ref": "#/definitions/text", "description": "Short italic note on the card." },
+          "accent": { "$ref": "#/definitions/colour", "description": "The card's colour." },
+          "palette": { "type": "array", "items": { "$ref": "#/definitions/colour" }, "description": "Colour dots shown with the dress code. [] hides them." },
+          "motif": { "type": "string", "enum": ["haldi", "mehendi", "sangeet", "wedding", "reception", "lotus"], "description": "Optional: force the card's drawing instead of guessing from the name." }
+        }
+      }
+    }
+  }
+}
