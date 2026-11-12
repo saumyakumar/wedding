@@ -6,10 +6,10 @@
 <script>document.documentElement.className = "js";</script>
 <!-- TODO: the title and the description/og: tags below are what WhatsApp shows in the link preview.
      Link previews don't run JavaScript, so edit these by hand as well as CONFIG. -->
-<title>Aanya &amp; Vihaan · Wedding Celebrations</title>
-<meta name="description" content="Schedule, venues, dress codes and calendar invites for the wedding celebrations of Aanya &amp; Vihaan, 18–21 February 2027, Jaipur.">
-<meta property="og:title" content="Aanya &amp; Vihaan · Wedding Celebrations">
-<meta property="og:description" content="Schedule, venues, dress codes and calendar invites. 18–21 February 2027 · Jaipur">
+<title>Sushmit &amp; Manaswita · Wedding Celebrations</title>
+<meta name="description" content="Schedule, venues, dress codes and calendar invites for the wedding celebrations of Sushmit Shekhar &amp; Manaswita Datta, 15–16 February 2027.">
+<meta property="og:title" content="Sushmit &amp; Manaswita · Wedding Celebrations">
+<meta property="og:description" content="Schedule, venues, dress codes and calendar invites. 15–16 February 2027">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://saumyakumar.github.io/wedding/">
 <meta name="theme-color" content="#3A0B16">
@@ -296,7 +296,9 @@
     background: radial-gradient(circle at 10px 0, var(--bg) 9.5px, transparent 10px) 0 0 / 20px 12px repeat-x; }
   .mono-lg { display: flex; align-items: center; justify-content: center; width: 98px; height: 98px; margin: 0 auto 20px; border-radius: 50%; border: 1px solid var(--gold-2);
     box-shadow: inset 0 0 0 5px var(--wine), inset 0 0 0 6px rgba(230,204,148,.55); font-family: var(--serif); font-size: 34px; font-weight: 600; color: #FFF4E0; }
-  .mono-lg i, .mono-sm i { font-size: .62em; margin: 0 .08em; }
+  .mono-lotus { width: 64%; height: auto; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linejoin: round; }
+  .mono-lg { color: var(--gold-2); }
+  .mono-lg .mono-lotus { width: 60%; stroke-width: 1.7; }
   .mono-lg i { color: var(--marigold); font-weight: 500; }
   .f-names { font-family: var(--serif); font-size: 36px; font-weight: 600; color: #FFF4E0; }
   .f-date span { display: block; }
@@ -588,14 +590,14 @@
    it is treated as the next day automatically.
    ===================================================================== */
 const CONFIG = {
-  couple: ["Aanya", "Vihaan"],                       // TODO: the couple's names (shown in this order)
+  couple: ["Sushmit", "Manaswita"],                  // Sushmit Shekhar & Manaswita Datta (first names shown on the page)
   blessing: "॥ श्री गणेशाय नमः ॥",                    // TODO: line above the names (e.g. "॥ शुभ विवाह ॥"), or "" to hide
-  hashtag: "#AanyaWedsVihaan",                       // TODO: your wedding hashtag
-  city: "Jaipur, Rajasthan",                         // TODO: city shown under the dates
+  hashtag: "#SushmitWedsManaswita",                  // TODO: confirm the wedding hashtag
+  city: "Jaipur, Rajasthan",                         // TODO: placeholder city; replace once confirmed
   welcome: "",                                       // Optional: a short welcome line under the arch ("" hides it)
   siteUrl: "https://saumyakumar.github.io/wedding/", // Live page URL, used for the QR code and WhatsApp share. Change only if the page moves.
   photoAlbumUrl: "https://photos.app.goo.gl/REPLACE-WITH-YOUR-ALBUM-LINK", // TODO: Google Photos shared-album link (Share → Create link)
-  shareMessage: "You're invited! 💐 Aanya & Vihaan's wedding celebrations, 18–21 February 2027 in Jaipur. Schedule, venues, dress codes and calendar invites: {url}", // TODO: WhatsApp message; {url} becomes the page link
+  shareMessage: "You're invited! 💐 Sushmit & Manaswita's wedding celebrations, 15–16 February 2027. Schedule, venues, dress codes and calendar invites: {url}", // TODO: add the city once confirmed; {url} becomes the page link
 
   contacts: [                                        // TODO: real names, roles and phone numbers (with +91)
     { name: "Rohan Mehta",  role: "Bride's brother · travel & stay",  phone: "+91 98290 00001" }, // TODO
@@ -606,9 +608,9 @@ const CONFIG = {
   // accent  = the function's colour on its card.
   // palette = optional colour dots shown with the dress code ([] hides them).
   events: [
-    { // TODO: all fields of this event
+    { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
       name: "Haldi",
-      date: "2027-02-18", start: "10:00", end: "13:00",
+      date: "2027-02-15", start: "09:30", end: "12:30",
       venue: "Courtyard Lawns, Haveli Rang Mahal",
       address: "12 Civil Lines Road, Jaipur, Rajasthan 302006",
       mapsUrl: "https://www.google.com/maps/search/?api=1&query=Haveli+Rang+Mahal+Civil+Lines+Jaipur",
@@ -616,9 +618,9 @@ const CONFIG = {
       note: "Brunch will be served. Bring a spare outfit if you plan to join the fun.",
       accent: "#E3A008", palette: ["#F5C518", "#F9E08B", "#FFFFFF"]
     },
-    { // TODO: all fields of this event
+    { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
       name: "Mehendi",
-      date: "2027-02-18", start: "16:00", end: "20:00",
+      date: "2027-02-15", start: "15:00", end: "18:30",
       venue: "Garden Pavilion, Haveli Rang Mahal",
       address: "12 Civil Lines Road, Jaipur, Rajasthan 302006",
       mapsUrl: "https://www.google.com/maps/search/?api=1&query=Haveli+Rang+Mahal+Civil+Lines+Jaipur",
@@ -626,29 +628,29 @@ const CONFIG = {
       note: "Henna artists for every guest, chaat counters and Rajasthani folk music.",
       accent: "#4F7A3A", palette: ["#4F7A3A", "#9CC17B", "#E66F9B"]
     },
-    { // TODO: all fields of this event
+    { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
       name: "Sangeet",
-      date: "2027-02-19", start: "19:30", end: "23:30",
+      date: "2027-02-15", start: "20:00", end: "23:30",
       venue: "Durbar Hall, Sheesh Bagh Palace",
       address: "Amer Road, Jaipur, Rajasthan 302002",
       mapsUrl: "https://www.google.com/maps/search/?api=1&query=Sheesh+Bagh+Palace+Amer+Road+Jaipur",
       dressCode: "Glam Indo-western — sequins and shimmer welcome",
-      note: "Family performances begin at 8:30 PM, followed by dinner and dancing.",
+      note: "Family performances begin at 9:00 PM, followed by dinner and dancing.",
       accent: "#B0306A", palette: ["#B0306A", "#2B2B6E", "#D9B45A"]
     },
-    { // TODO: all fields of this event
+    { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
       name: "Wedding",
-      date: "2027-02-20", start: "18:00", end: "00:30",
+      date: "2027-02-16", start: "11:00", end: "15:00",
       venue: "Mandap Lawns, Sheesh Bagh Palace",
       address: "Amer Road, Jaipur, Rajasthan 302002",
       mapsUrl: "https://www.google.com/maps/search/?api=1&query=Sheesh+Bagh+Palace+Amer+Road+Jaipur",
       dressCode: "Traditional Indian — sarees, lehengas, sherwanis, bandhgalas",
-      note: "The baraat sets off at 6:00 PM; pheras at 8:30 PM. Dinner follows.",
+      note: "The baraat arrives at 11:00 AM; pheras at 12:30 PM. Lunch follows.",
       accent: "#A51C30", palette: ["#A51C30", "#E07B39", "#D4AF37"]
     },
-    { // TODO: all fields of this event
+    { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
       name: "Reception",
-      date: "2027-02-21", start: "19:30", end: "23:00",
+      date: "2027-02-16", start: "19:30", end: "23:30",
       venue: "Grand Ballroom, The Aravalli Hotel",
       address: "Tonk Road, Jaipur, Rajasthan 302015",
       mapsUrl: "https://www.google.com/maps/search/?api=1&query=Aravalli+Hotel+Tonk+Road+Jaipur",
@@ -901,7 +903,7 @@ const CONFIG = {
   function renderHeader() {
     const [a, b] = CONFIG.couple.map(escHtml);
     $("#names").innerHTML = `${a}<span class="amp" aria-hidden="true">&amp;</span><span class="sr-only"> and </span>${b}`;
-    const mono = `${initials[0]}<i>&amp;</i>${initials[1]}`;
+    const mono = '<svg class="mono-lotus" viewBox="0 0 64 32" aria-hidden="true"><use href="#m-lotus"/></svg>';
     $("#mono-sm").innerHTML = mono; $("#mono-lg").innerHTML = mono;
     document.title = coupleName + " · Wedding Celebrations";
     $("#when").textContent = dateRange;
