@@ -7,9 +7,9 @@
 <!-- TODO: the title and the description/og: tags below are what WhatsApp shows in the link preview.
      Link previews don't run JavaScript, so edit these by hand as well as CONFIG. -->
 <title>Sushmit &amp; Manaswita · Wedding Celebrations</title>
-<meta name="description" content="Schedule, venues, dress codes and calendar invites for the wedding celebrations of Sushmit Shekhar &amp; Manaswita Datta, 15–16 February 2027.">
+<meta name="description" content="Schedule, venues, dress codes and calendar invites for the wedding celebrations of Sushmit Shekhar &amp; Manaswita Datta, 15–16 February 2027, Jamshedpur.">
 <meta property="og:title" content="Sushmit &amp; Manaswita · Wedding Celebrations">
-<meta property="og:description" content="Schedule, venues, dress codes and calendar invites. 15–16 February 2027">
+<meta property="og:description" content="Schedule, venues, dress codes and calendar invites. 15–16 February 2027 · Jamshedpur">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://saumyakumar.github.io/wedding/">
 <meta name="theme-color" content="#3A0B16">
@@ -80,7 +80,7 @@
       radial-gradient(circle at 50% 28px, #F5B21C 4.5px, transparent 5.5px) 28px 0 / 56px 38px repeat-x;
     filter: drop-shadow(0 3px 4px rgba(0,0,0,.35)); }
   .hero-inner { position: relative; max-width: 720px; margin: 0 auto; padding: 18px 16px 0; }
-  .arch { position: relative; width: min(100%, 340px); margin: 14px auto 0; padding: 58px 20px 40px; }
+  .arch { position: relative; width: min(100%, 340px); margin: 14px auto 0; padding: 58px 20px 40px; container-type: inline-size; }
   /* Ganesha: gold line art with halo, sunburst and glow */
   .deity { position: relative; width: 214px; height: 226px; margin: 0 auto 10px; animation: deity-in 1.6s var(--ease) both; }
   .deity-glow { position: absolute; left: 50%; top: 46%; width: 460px; height: 460px; transform: translate(-50%, -50%); pointer-events: none;
@@ -119,7 +119,8 @@
   @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
   .blessing { font-size: 15px; letter-spacing: .06em; color: var(--gold-2); margin-bottom: 14px; }
   .overline { font-size: 12px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; color: rgba(230,204,148,.9); }
-  .names { margin-top: 14px; font-size: clamp(3.3rem, 16vw, 5.6rem); font-weight: 600; line-height: .92; color: #FFF4E0; letter-spacing: -.01em; }
+  .names .nm { display: block; white-space: nowrap; }
+  .names { margin-top: 14px; font-size: clamp(2.6rem, 13vw, 4.2rem); font-size: min(5.4rem, 21cqi); font-weight: 600; line-height: .92; color: #FFF4E0; letter-spacing: -.01em; }
   .names .amp { display: block; font-style: italic; font-weight: 500; font-size: .5em; line-height: 1.25; color: var(--marigold); }
   .rule { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 22px 0 14px; color: var(--gold-2); }
   .rule::before, .rule::after { content: ""; width: 54px; height: 1px; background: linear-gradient(90deg, transparent, currentColor); opacity: .7; }
@@ -349,7 +350,7 @@
   @media (min-width: 760px) {
     body { font-size: 18px; }
     .hero { padding-bottom: 72px; }
-    .arch { width: 400px; padding: 70px 28px 48px; }
+    .arch { width: 440px; padding: 70px 30px 48px; }
     .deity { width: 250px; height: 264px; }
     .ev-head { padding: 28px 28px 22px; grid-template-columns: 64px 1fr auto; gap: 20px; }
     .ev + .ev::before { left: 59px; }
@@ -593,16 +594,14 @@ const CONFIG = {
   couple: ["Sushmit", "Manaswita"],                  // Sushmit Shekhar & Manaswita Datta (first names shown on the page)
   blessing: "॥ श्री गणेशाय नमः ॥",                    // TODO: line above the names (e.g. "॥ शुभ विवाह ॥"), or "" to hide
   hashtag: "#SushmitWedsManaswita",                  // TODO: confirm the wedding hashtag
-  city: "Jaipur, Rajasthan",                         // TODO: placeholder city; replace once confirmed
+  city: "Jamshedpur, Jharkhand",                     // City shown under the dates
   welcome: "",                                       // Optional: a short welcome line under the arch ("" hides it)
   siteUrl: "https://saumyakumar.github.io/wedding/", // Live page URL, used for the QR code and WhatsApp share. Change only if the page moves.
   photoAlbumUrl: "https://photos.app.goo.gl/REPLACE-WITH-YOUR-ALBUM-LINK", // TODO: Google Photos shared-album link (Share → Create link)
-  shareMessage: "You're invited! 💐 Sushmit & Manaswita's wedding celebrations, 15–16 February 2027. Schedule, venues, dress codes and calendar invites: {url}", // TODO: add the city once confirmed; {url} becomes the page link
+  shareMessage: "You're invited! 💐 Sushmit & Manaswita's wedding celebrations, 15–16 February 2027 in Jamshedpur. Schedule, venues, dress codes and calendar invites: {url}", // WhatsApp message; {url} becomes the page link
 
-  contacts: [                                        // TODO: real names, roles and phone numbers (with +91)
-    { name: "Rohan Mehta",  role: "Bride's brother · travel & stay",  phone: "+91 98290 00001" }, // TODO
-    { name: "Priya Sharma", role: "Groom's cousin · venues & timings", phone: "+91 98290 00002" }, // TODO
-    { name: "Kabir Singh",  role: "Wedding planner",                  phone: "+91 98290 00003" }  // TODO
+  contacts: [                                        // Add more as { name, role, phone } — phone with +91
+    { name: "Sushmit Shekhar", role: "Groom", phone: "+91 91996 94008" }
   ],
 
   // accent  = the function's colour on its card.
@@ -611,9 +610,9 @@ const CONFIG = {
     { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
       name: "Haldi",
       date: "2027-02-15", start: "09:30", end: "12:30",
-      venue: "Courtyard Lawns, Haveli Rang Mahal",
-      address: "12 Civil Lines Road, Jaipur, Rajasthan 302006",
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Haveli+Rang+Mahal+Civil+Lines+Jaipur",
+      venue: "Venue to be announced",                // TODO: venue name
+      address: "Jamshedpur, Jharkhand",              // TODO: full address
+      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Jamshedpur%2C+Jharkhand", // TODO: Google Maps link to the venue
       dressCode: "Shades of yellow — and clothes you don't mind getting turmeric on",
       note: "Brunch will be served. Bring a spare outfit if you plan to join the fun.",
       accent: "#E3A008", palette: ["#F5C518", "#F9E08B", "#FFFFFF"]
@@ -621,9 +620,9 @@ const CONFIG = {
     { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
       name: "Mehendi",
       date: "2027-02-15", start: "15:00", end: "18:30",
-      venue: "Garden Pavilion, Haveli Rang Mahal",
-      address: "12 Civil Lines Road, Jaipur, Rajasthan 302006",
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Haveli+Rang+Mahal+Civil+Lines+Jaipur",
+      venue: "Venue to be announced",                // TODO: venue name
+      address: "Jamshedpur, Jharkhand",              // TODO: full address
+      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Jamshedpur%2C+Jharkhand", // TODO: Google Maps link to the venue
       dressCode: "Greens, pinks and festive florals",
       note: "Henna artists for every guest, chaat counters and Rajasthani folk music.",
       accent: "#4F7A3A", palette: ["#4F7A3A", "#9CC17B", "#E66F9B"]
@@ -631,9 +630,9 @@ const CONFIG = {
     { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
       name: "Sangeet",
       date: "2027-02-15", start: "20:00", end: "23:30",
-      venue: "Durbar Hall, Sheesh Bagh Palace",
-      address: "Amer Road, Jaipur, Rajasthan 302002",
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Sheesh+Bagh+Palace+Amer+Road+Jaipur",
+      venue: "Venue to be announced",                // TODO: venue name
+      address: "Jamshedpur, Jharkhand",              // TODO: full address
+      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Jamshedpur%2C+Jharkhand", // TODO: Google Maps link to the venue
       dressCode: "Glam Indo-western — sequins and shimmer welcome",
       note: "Family performances begin at 9:00 PM, followed by dinner and dancing.",
       accent: "#B0306A", palette: ["#B0306A", "#2B2B6E", "#D9B45A"]
@@ -641,9 +640,9 @@ const CONFIG = {
     { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
       name: "Wedding",
       date: "2027-02-16", start: "11:00", end: "15:00",
-      venue: "Mandap Lawns, Sheesh Bagh Palace",
-      address: "Amer Road, Jaipur, Rajasthan 302002",
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Sheesh+Bagh+Palace+Amer+Road+Jaipur",
+      venue: "Venue to be announced",                // TODO: venue name
+      address: "Jamshedpur, Jharkhand",              // TODO: full address
+      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Jamshedpur%2C+Jharkhand", // TODO: Google Maps link to the venue
       dressCode: "Traditional Indian — sarees, lehengas, sherwanis, bandhgalas",
       note: "The baraat arrives at 11:00 AM; pheras at 12:30 PM. Lunch follows.",
       accent: "#A51C30", palette: ["#A51C30", "#E07B39", "#D4AF37"]
@@ -651,11 +650,11 @@ const CONFIG = {
     { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
       name: "Reception",
       date: "2027-02-16", start: "19:30", end: "23:30",
-      venue: "Grand Ballroom, The Aravalli Hotel",
-      address: "Tonk Road, Jaipur, Rajasthan 302015",
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Aravalli+Hotel+Tonk+Road+Jaipur",
+      venue: "Venue to be announced",                // TODO: venue name
+      address: "Jamshedpur, Jharkhand",              // TODO: full address
+      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Jamshedpur%2C+Jharkhand", // TODO: Google Maps link to the venue
       dressCode: "Evening formal — suits, gowns or your finest saree",
-      note: "Dinner, toasts and dancing. Ask any of our contacts if you need an airport drop the next day.",
+      note: "Dinner, toasts and dancing. Ask us if you need a drop to the station or airport the next day.",
       accent: "#2F4A7A", palette: ["#1F2A44", "#2F4A7A", "#C0C0C8"]
     }
   ]
@@ -900,9 +899,21 @@ const CONFIG = {
     }
   }
 
+  // Shrink the names if a long one would overflow the arch (any screen size)
+  function fitNames() {
+    const h = $("#names"), box = h.parentElement;
+    h.style.fontSize = "";
+    const avail = box.clientWidth;
+    const widest = Math.max(...[...h.querySelectorAll(".nm")].map((n) => n.scrollWidth));
+    if (widest > avail) h.style.fontSize = (parseFloat(getComputedStyle(h).fontSize) * avail / widest * 0.97).toFixed(1) + "px";
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitNames);
+  window.addEventListener("resize", () => { clearTimeout(fitNames.t); fitNames.t = setTimeout(fitNames, 120); });
+
   function renderHeader() {
     const [a, b] = CONFIG.couple.map(escHtml);
-    $("#names").innerHTML = `${a}<span class="amp" aria-hidden="true">&amp;</span><span class="sr-only"> and </span>${b}`;
+    $("#names").innerHTML = `<span class="nm">${a}</span><span class="amp" aria-hidden="true">&amp;</span><span class="sr-only"> and </span><span class="nm">${b}</span>`;
+    fitNames();
     const mono = '<svg class="mono-lotus" viewBox="0 0 64 32" aria-hidden="true"><use href="#m-lotus"/></svg>';
     $("#mono-sm").innerHTML = mono; $("#mono-lg").innerHTML = mono;
     document.title = coupleName + " · Wedding Celebrations";
