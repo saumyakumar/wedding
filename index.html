@@ -36,8 +36,8 @@
     --gold-ink: #7D5713;
     --marigold: #F0A202;
     --wa: #0E7A43;
-    --serif: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-    --sans: Jost, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+    --serif: "Cormorant Garamond", "Noto Serif Devanagari", "Noto Serif Bengali", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --sans: Jost, Hind, "Hind Siliguri", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
     --r-lg: 22px;
     --shadow: 0 1px 1px rgba(58,11,22,.04), 0 3px 8px -3px rgba(58,11,22,.07), 0 22px 44px -28px rgba(58,11,22,.42);
     --ease: cubic-bezier(.2,.7,.2,1);
@@ -117,7 +117,7 @@
   .arch-content > :nth-child(4) { animation-delay: .26s; } .arch-content > :nth-child(5) { animation-delay: .34s; }
   .arch-content > :nth-child(6) { animation-delay: .42s; }
   @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
-  .blessing { font-size: 15px; letter-spacing: .06em; color: var(--gold-2); margin-bottom: 14px; }
+  .blessing { font-size: 15px; letter-spacing: 0; color: var(--gold-2); margin-bottom: 14px; }
   .overline { font-size: 12px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; color: rgba(230,204,148,.9); }
   .names .nm { display: block; white-space: nowrap; }
   .names { margin-top: 14px; font-size: clamp(2.6rem, 13vw, 4.2rem); font-size: min(5.4rem, 21cqi); font-weight: 600; line-height: .92; color: #FFF4E0; letter-spacing: -.01em; }
@@ -348,6 +348,29 @@
   .sheet-note { margin: 16px 4px 4px; text-align: center; font-size: 14px; color: var(--ink-3); }
   .sheet-close { width: 100%; margin-top: 6px; color: var(--ink-2); background: none; }
 
+  /* ============ Language switch ============ */
+  .lang-switch { display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px; border: 1px solid rgba(230,204,148,.5);
+    background: rgba(58,11,22,.6); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+  .lang-switch button { min-width: 44px; height: 40px; padding: 0 11px; border: 0; border-radius: 999px; background: none; cursor: pointer;
+    color: #F7E9D0; font: 500 15px/1 var(--sans); transition: background-color .2s, color .2s; -webkit-tap-highlight-color: transparent; }
+  .lang-switch button:hover { background: rgba(255,244,224,.1); }
+  .lang-switch button[aria-pressed="true"] { background: var(--gold-2); color: #3A0B16; font-weight: 600; }
+  .hero .lang-switch { position: absolute; top: 46px; right: 10px; z-index: 5; }
+  .footer .lang-switch { margin-top: 26px; }
+  /* Hindi and Bengali: no letter-spacing (it breaks joined letters), a little more line height */
+  html[lang="hi"] *, html[lang="bn"] * { letter-spacing: 0 !important; }
+  html:is([lang="hi"], [lang="bn"]) .names { line-height: 1.15; }
+  html:is([lang="hi"], [lang="bn"]) .names .amp { line-height: 1.5; }
+  html:is([lang="hi"], [lang="bn"]) :is(h2, h3, .f-names, .where, .sheet h2) { line-height: 1.3; }
+  html:is([lang="hi"], [lang="bn"]) .sec-head h2 { font-size: clamp(2.1rem, 8.4vw, 2.9rem); }
+  html:is([lang="hi"], [lang="bn"]) .ev-titles h3 { font-size: clamp(1.9rem, 8vw, 2.4rem); }
+  html:is([lang="hi"], [lang="bn"]) :is(.keep h3, .save-banner h3) { font-size: 26px; }
+  html:is([lang="hi"], [lang="bn"]) .ev-note { font-size: 17px; line-height: 1.6; }
+  html:is([lang="hi"], [lang="bn"]) .eyebrow { font-size: 14px; }
+  html:is([lang="hi"], [lang="bn"]) .when { font-size: 16px; }
+  html:is([lang="hi"], [lang="bn"]) :is(.overline, .cd-caption, .cd-l, .ev-meta, .fact dt, .ev-mon, .ev-wd, .f-date) { font-size: 14px; }
+  html:is([lang="hi"], [lang="bn"]) .pill { font-size: 13px; padding-top: 2px; }
+
   /* ============ Toast ============ */
   .toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom)); z-index: 50; width: min(92vw, 440px); padding: 14px 18px;
     border-radius: 16px; background: #22160F; color: #FFF4E0; font-size: 15px; line-height: 1.45; box-shadow: 0 18px 36px -12px rgba(0,0,0,.5);
@@ -407,6 +430,11 @@
 
 <header class="hero" id="top">
   <div class="toran" aria-hidden="true"></div>
+  <div class="lang-switch" role="group" data-i18n-aria="lang">
+    <button type="button" data-lang="en" lang="en" aria-label="English">EN</button>
+    <button type="button" data-lang="hi" lang="hi" aria-label="हिन्दी">हिं</button>
+    <button type="button" data-lang="bn" lang="bn" aria-label="বাংলা">বাং</button>
+  </div>
   <div class="hero-inner">
     <div class="arch">
       <svg class="arch-svg" viewBox="0 0 300 440" preserveAspectRatio="none" aria-hidden="true">
@@ -466,7 +494,7 @@
       </div>
       <div class="arch-content">
         <p class="blessing" id="blessing" lang="hi"></p>
-        <p class="overline">Together with their families</p>
+        <p class="overline" data-i18n="together">Together with their families</p>
         <h1 class="names" id="names"></h1>
         <div class="rule" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 0 10 5 5 10 0 5z"/></svg></div>
         <p class="when" id="when"></p>
@@ -478,29 +506,29 @@
     <div class="countdown" id="countdown">
       <p class="cd-caption" id="cd-caption"></p>
       <div class="cd-row" id="cd-grid" role="timer" aria-live="off">
-        <div class="cd"><span class="cd-n" data-u="d">–</span><span class="cd-l">Days</span></div>
-        <div class="cd"><span class="cd-n" data-u="h">–</span><span class="cd-l">Hours</span></div>
-        <div class="cd"><span class="cd-n" data-u="m">–</span><span class="cd-l">Mins</span></div>
-        <div class="cd"><span class="cd-n" data-u="s">–</span><span class="cd-l">Secs</span></div>
+        <div class="cd"><span class="cd-n" data-u="d">–</span><span class="cd-l" data-i18n="cd_d">Days</span></div>
+        <div class="cd"><span class="cd-n" data-u="h">–</span><span class="cd-l" data-i18n="cd_h">Hours</span></div>
+        <div class="cd"><span class="cd-n" data-u="m">–</span><span class="cd-l" data-i18n="cd_m">Mins</span></div>
+        <div class="cd"><span class="cd-n" data-u="s">–</span><span class="cd-l" data-i18n="cd_s">Secs</span></div>
       </div>
     </div>
     <p class="cd-done" id="cd-done" hidden></p>
 
     <div class="hero-actions">
-      <button type="button" class="btn btn-gold" data-cal="all"><svg class="i" aria-hidden="true"><use href="#i-cal-add"/></svg>Save all events to calendar</button>
-      <a class="btn btn-ghost-light" href="#schedule">View the schedule<svg class="i" aria-hidden="true"><use href="#i-arrow-down"/></svg></a>
+      <button type="button" class="btn btn-gold" data-cal="all"><svg class="i" aria-hidden="true"><use href="#i-cal-add"/></svg><span data-i18n="save_all_long">Save all events to calendar</span></button>
+      <a class="btn btn-ghost-light" href="#schedule"><span data-i18n="view_schedule">View the schedule</span><svg class="i" aria-hidden="true"><use href="#i-arrow-down"/></svg></a>
     </div>
   </div>
 </header>
 
 <nav class="topbar" aria-label="Sections">
   <div class="topbar-in">
-    <a class="mono-sm" href="#top" id="mono-sm" aria-label="Back to top"></a>
+    <a class="mono-sm" href="#top" id="mono-sm" aria-label="Back to top" data-i18n-aria="back_top"></a>
     <ul class="nav">
-      <li><a href="#schedule" data-sec="schedule">Schedule</a></li>
-      <li><a href="#photos" data-sec="photos">Photos</a></li>
-      <li><a href="#share" data-sec="share">Share</a></li>
-      <li><a href="#contacts" data-sec="contacts">Contacts</a></li>
+      <li><a href="#schedule" data-sec="schedule" data-i18n="nav_schedule">Schedule</a></li>
+      <li><a href="#photos" data-sec="photos" data-i18n="nav_photos">Photos</a></li>
+      <li><a href="#share" data-sec="share" data-i18n="nav_share">Share</a></li>
+      <li><a href="#contacts" data-sec="contacts" data-i18n="nav_contacts">Contacts</a></li>
     </ul>
   </div>
 </nav>
@@ -509,9 +537,9 @@
   <section class="section" id="schedule" aria-labelledby="schedule-h">
     <div class="container narrow">
       <header class="sec-head" data-reveal>
-        <p class="eyebrow">The Schedule</p>
-        <h2 id="schedule-h">The Celebrations</h2>
-        <p class="sec-sub">All times are India Standard Time. Add a function to your calendar and you’ll get a reminder a day before and two hours before.</p>
+        <p class="eyebrow" data-i18n="sched_eyebrow">The Schedule</p>
+        <h2 id="schedule-h" data-i18n="sched_h">The Celebrations</h2>
+        <p class="sec-sub" data-i18n="sched_sub">All times are India Standard Time. Add a function to your calendar and you’ll get a reminder a day before and two hours before.</p>
       </header>
       <div class="thread-wrap" id="thread-wrap">
         <div class="thread-names" aria-hidden="true">
@@ -522,9 +550,9 @@
         <ol class="timeline" id="events"></ol>
       </div>
       <div class="save-banner" data-reveal>
-        <h3>Never miss a moment</h3>
+        <h3 data-i18n="banner_h">Never miss a moment</h3>
         <p id="save-banner-text">Save every function to your calendar in one tap, reminders included.</p>
-        <button type="button" class="btn btn-gold" data-cal="all"><svg class="i" aria-hidden="true"><use href="#i-cal-add"/></svg>Save all events</button>
+        <button type="button" class="btn btn-gold" data-cal="all"><svg class="i" aria-hidden="true"><use href="#i-cal-add"/></svg><span data-i18n="save_all_short">Save all events</span></button>
       </div>
     </div>
   </section>
@@ -532,26 +560,26 @@
   <section class="section" aria-labelledby="keep-h">
     <div class="container">
       <header class="sec-head" data-reveal>
-        <p class="eyebrow">Keepsakes</p>
-        <h2 id="keep-h">Memories &amp; Sharing</h2>
+        <p class="eyebrow" data-i18n="keep_eyebrow">Keepsakes</p>
+        <h2 id="keep-h" data-i18n="keep_h">Memories &amp; Sharing</h2>
       </header>
       <div class="keep-grid">
         <article class="keep" id="photos" data-reveal aria-labelledby="photos-h">
           <div class="polaroids" aria-hidden="true"><span></span><span></span><span></span></div>
-          <h3 id="photos-h">Our shared album</h3>
-          <p>Captured a candid moment? Add it to the album so everyone can relive the celebrations.</p>
-          <button type="button" class="tag-chip" id="hashtag-btn" aria-label="Copy hashtag"><span id="hashtag"></span><svg class="i" aria-hidden="true"><use href="#i-copy"/></svg></button>
-          <a class="btn btn-primary" id="photos-btn" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-camera"/></svg>Open the photo album</a>
+          <h3 id="photos-h" data-i18n="photos_h">Our shared album</h3>
+          <p data-i18n="photos_p">Captured a candid moment? Add it to the album so everyone can relive the celebrations.</p>
+          <button type="button" class="tag-chip" id="hashtag-btn" aria-label="Copy hashtag" data-i18n-aria="copy_tag"><span id="hashtag"></span><svg class="i" aria-hidden="true"><use href="#i-copy"/></svg></button>
+          <a class="btn btn-primary" id="photos-btn" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-camera"/></svg><span data-i18n="open_album">Open the photo album</span></a>
         </article>
         <article class="keep" id="share" data-reveal aria-labelledby="share-h">
-          <div class="qr-frame" id="qr-frame"><span class="qr-msg">Loading QR code…</span></div>
-          <h3 id="share-h">Share the invitation</h3>
-          <p>Send this page to family and friends, or print the QR code for the welcome desk.</p>
+          <div class="qr-frame" id="qr-frame"><span class="qr-msg" data-i18n="qr_loading">Loading QR code…</span></div>
+          <h3 id="share-h" data-i18n="share_h">Share the invitation</h3>
+          <p data-i18n="share_p">Send this page to family and friends, or print the QR code for the welcome desk.</p>
           <div class="share-actions">
-            <a class="btn btn-wa" id="wa-btn" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg>Share on WhatsApp</a>
+            <a class="btn btn-wa" id="wa-btn" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg><span data-i18n="share_wa">Share on WhatsApp</span></a>
             <div class="btn-row">
-              <button type="button" class="btn btn-outline" id="copy-link"><svg class="i" aria-hidden="true"><use href="#i-link"/></svg>Copy link</button>
-              <button type="button" class="btn btn-outline" id="qr-download" aria-label="Download QR code as PNG" disabled><svg class="i" aria-hidden="true"><use href="#i-download"/></svg>Download QR</button>
+              <button type="button" class="btn btn-outline" id="copy-link"><svg class="i" aria-hidden="true"><use href="#i-link"/></svg><span data-i18n="copy_link">Copy link</span></button>
+              <button type="button" class="btn btn-outline" id="qr-download" aria-label="Download QR code as PNG" data-i18n-aria="qr_dl_aria" disabled><svg class="i" aria-hidden="true"><use href="#i-download"/></svg><span data-i18n="qr_dl">Download QR</span></button>
             </div>
           </div>
         </article>
@@ -562,9 +590,9 @@
   <section class="section" id="contacts" aria-labelledby="contacts-h">
     <div class="container narrow">
       <header class="sec-head" data-reveal>
-        <p class="eyebrow">Here to help</p>
-        <h2 id="contacts-h">Need a Hand?</h2>
-        <p class="sec-sub">For travel, stay, directions or anything at all, give us a call.</p>
+        <p class="eyebrow" data-i18n="contacts_eyebrow">Here to help</p>
+        <h2 id="contacts-h" data-i18n="contacts_h">Need a Hand?</h2>
+        <p class="sec-sub" data-i18n="contacts_sub">For travel, stay, directions or anything at all, give us a call.</p>
       </header>
       <ul class="contacts" id="contacts-list"></ul>
     </div>
@@ -576,7 +604,12 @@
   <p class="f-names" id="footer-names"></p>
   <p class="f-date" id="footer-date"></p>
   <p class="f-tag" id="footer-tag"></p>
-  <p class="f-love">We can’t wait to celebrate with you.</p>
+  <p class="f-love" data-i18n="footer_love">We can’t wait to celebrate with you.</p>
+  <div class="lang-switch" role="group" data-i18n-aria="lang">
+    <button type="button" data-lang="en" lang="en" aria-label="English">EN</button>
+    <button type="button" data-lang="hi" lang="hi" aria-label="हिन्दी">हिं</button>
+    <button type="button" data-lang="bn" lang="bn" aria-label="বাংলা">বাং</button>
+  </div>
 </footer>
 
 <dialog class="sheet" id="cal-sheet" aria-labelledby="sheet-title" aria-describedby="sheet-sub">
@@ -586,22 +619,22 @@
   <div class="sheet-opts">
     <button type="button" class="opt opt-apple" data-opt="ics">
       <span class="opt-ico" style="--t:#22160F"><svg class="i" aria-hidden="true"><use href="#i-cal"/></svg></span>
-      <span class="opt-txt"><b>Apple Calendar</b><small>iPhone, iPad and Mac</small></span>
+      <span class="opt-txt"><b>Apple Calendar</b><small data-i18n="opt_apple">iPhone, iPad and Mac</small></span>
       <svg class="i chev" aria-hidden="true"><use href="#i-chev"/></svg>
     </button>
     <a class="opt opt-google" id="opt-google" target="_blank" rel="noopener">
       <span class="opt-ico" style="--t:#1A5FC8"><svg class="i" aria-hidden="true"><use href="#i-cal-add"/></svg></span>
-      <span class="opt-txt"><b>Google Calendar</b><small>Opens Google Calendar</small></span>
+      <span class="opt-txt"><b>Google Calendar</b><small data-i18n="opt_google">Opens Google Calendar</small></span>
       <svg class="i chev" aria-hidden="true"><use href="#i-chev"/></svg>
     </a>
     <button type="button" class="opt opt-other" data-opt="ics">
       <span class="opt-ico" style="--t:#6E1423"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg></span>
-      <span class="opt-txt"><b>Outlook, Samsung &amp; others</b><small>Downloads a calendar file (.ics)</small></span>
+      <span class="opt-txt"><b data-i18n="opt_other_b">Outlook, Samsung &amp; others</b><small data-i18n="opt_other">Downloads a calendar file (.ics)</small></span>
       <svg class="i chev" aria-hidden="true"><use href="#i-chev"/></svg>
     </button>
   </div>
   <p class="sheet-note" id="sheet-note"></p>
-  <button type="button" class="btn sheet-close" data-close>Cancel</button>
+  <button type="button" class="btn sheet-close" data-close data-i18n="cancel">Cancel</button>
 </dialog>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -615,70 +648,101 @@
    it is treated as the next day automatically.
    ===================================================================== */
 const CONFIG = {
-  couple: ["Sushmit", "Manaswita"],                  // Sushmit Shekhar & Manaswita Datta (first names shown on the page)
-  blessing: "॥ श्री गणेशाय नमः ॥",                    // TODO: line above the names (e.g. "॥ शुभ विवाह ॥"), or "" to hide
+  // Text can be plain ("Haldi") or in three languages ({ en: "...", hi: "...", bn: "..." }).
+  // If a language is missing, English is shown.
+  couple: [
+    { en: "Sushmit",   hi: "सुश्मित",  bn: "সুস্মিত" },
+    { en: "Manaswita", hi: "मनस्विता", bn: "মনস্বিতা" }
+  ],                                                 // Sushmit Shekhar & Manaswita Datta (first names shown on the page)
+  blessing: "॥ श्री गणेशाय नमः ॥",                    // Line above the names (same in every language), or "" to hide
   hashtag: "#SushmitWedsManaswita",                  // TODO: confirm the wedding hashtag
-  city: "Jamshedpur, Jharkhand",                     // City shown under the dates
+  city: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },
   welcome: "",                                       // Optional: a short welcome line under the arch ("" hides it)
   siteUrl: "https://saumyakumar.github.io/wedding/", // Live page URL, used for the QR code and WhatsApp share. Change only if the page moves.
   photoAlbumUrl: "https://photos.app.goo.gl/REPLACE-WITH-YOUR-ALBUM-LINK", // TODO: Google Photos shared-album link (Share → Create link)
-  shareMessage: "You're invited! 💐 Sushmit & Manaswita's wedding celebrations, 15–16 February 2027 in Jamshedpur. Schedule, venues, dress codes and calendar invites: {url}", // WhatsApp message; {url} becomes the page link
+  shareMessage: {                                    // WhatsApp message; {url} becomes the page link
+    en: "You're invited! 💐 Sushmit & Manaswita's wedding celebrations, 15–16 February 2027 in Jamshedpur. Schedule, venues, dress codes and calendar invites: {url}",
+    hi: "आप सादर आमंत्रित हैं! 💐 सुश्मित & मनस्विता का विवाह समारोह, 15–16 फ़रवरी 2027, जमशेदपुर। कार्यक्रम, स्थान, पहनावा और कैलेंडर: {url}",
+    bn: "আপনাকে সাদর আমন্ত্রণ! 💐 সুস্মিত & মনস্বিতার বিবাহ অনুষ্ঠান, 15–16 ফেব্রুয়ারি 2027, জামশেদপুর। অনুষ্ঠানসূচি, স্থান, পোশাক ও ক্যালেন্ডার: {url}"
+  },
 
   contacts: [                                        // Add more as { name, role, phone } — phone with +91
-    { name: "Sushmit Shekhar", role: "Groom", phone: "+91 91996 94008" }
+    { name: { en: "Sushmit Shekhar", hi: "सुश्मित शेखर", bn: "সুস্মিত শেখর" },
+      role: { en: "Groom", hi: "दूल्हा", bn: "বর" },
+      phone: "+91 91996 94008" }
   ],
 
   // accent  = the function's colour on its card.
   // palette = optional colour dots shown with the dress code ([] hides them).
   events: [
     { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
-      name: "Haldi",
+      name: { en: "Haldi", hi: "हल्दी", bn: "গায়ে হলুদ" },
       date: "2027-02-15", start: "09:30", end: "12:30",
-      venue: "Venue to be announced",                // TODO: venue name
-      address: "Jamshedpur, Jharkhand",              // TODO: full address
+      venue: { en: "Venue to be announced", hi: "स्थान जल्द बताया जाएगा", bn: "স্থান শীঘ্রই জানানো হবে" },   // TODO: venue name
+      address: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },          // TODO: full address
       mapsUrl: "https://www.google.com/maps/search/?api=1&query=Jamshedpur%2C+Jharkhand", // TODO: Google Maps link to the venue
-      dressCode: "Shades of yellow — and clothes you don't mind getting turmeric on",
-      note: "Brunch will be served. Bring a spare outfit if you plan to join the fun.",
+      dressCode: { en: "Shades of yellow — and clothes you don't mind getting turmeric on",
+                   hi: "पीले रंग के कपड़े — ऐसे, जिन पर हल्दी लगने की फ़िक्र न हो",
+                   bn: "হলুদ রঙের পোশাক — এমন, যাতে হলুদ লাগলেও চিন্তা নেই" },
+      note: { en: "Brunch will be served. Bring a spare outfit if you plan to join the fun.",
+              hi: "ब्रंच की व्यवस्था रहेगी। मस्ती में शामिल होना हो तो एक जोड़ी कपड़े साथ रखें।",
+              bn: "ব্রাঞ্চের ব্যবস্থা থাকবে। মজায় যোগ দিতে চাইলে এক সেট বাড়তি জামা সঙ্গে আনুন।" },
       accent: "#E3A008", palette: ["#F5C518", "#F9E08B", "#FFFFFF"]
     },
     { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
-      name: "Mehendi",
+      name: { en: "Mehendi", hi: "मेहंदी", bn: "মেহেন্দি" },
       date: "2027-02-15", start: "15:00", end: "18:30",
-      venue: "Venue to be announced",                // TODO: venue name
-      address: "Jamshedpur, Jharkhand",              // TODO: full address
+      venue: { en: "Venue to be announced", hi: "स्थान जल्द बताया जाएगा", bn: "স্থান শীঘ্রই জানানো হবে" },   // TODO: venue name
+      address: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },          // TODO: full address
       mapsUrl: "https://www.google.com/maps/search/?api=1&query=Jamshedpur%2C+Jharkhand", // TODO: Google Maps link to the venue
-      dressCode: "Greens, pinks and festive florals",
-      note: "Henna artists for every guest, chaat counters and Rajasthani folk music.",
+      dressCode: { en: "Greens, pinks and festive florals",
+                   hi: "हरे, गुलाबी और फूलों वाले रंग-बिरंगे कपड़े",
+                   bn: "সবুজ, গোলাপি আর ফুলেল রঙিন সাজ" },
+      note: { en: "Henna artists for every guest, chaat counters and folk music.",
+              hi: "हर मेहमान के लिए मेहंदी, चाट के स्टॉल और लोक संगीत।",
+              bn: "প্রত্যেক অতিথির জন্য মেহেন্দি শিল্পী, চাটের স্টল আর লোকসংগীত।" },
       accent: "#4F7A3A", palette: ["#4F7A3A", "#9CC17B", "#E66F9B"]
     },
     { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
-      name: "Sangeet",
+      name: { en: "Sangeet", hi: "संगीत", bn: "সঙ্গীত" },
       date: "2027-02-15", start: "20:00", end: "23:30",
-      venue: "Venue to be announced",                // TODO: venue name
-      address: "Jamshedpur, Jharkhand",              // TODO: full address
+      venue: { en: "Venue to be announced", hi: "स्थान जल्द बताया जाएगा", bn: "স্থান শীঘ্রই জানানো হবে" },   // TODO: venue name
+      address: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },          // TODO: full address
       mapsUrl: "https://www.google.com/maps/search/?api=1&query=Jamshedpur%2C+Jharkhand", // TODO: Google Maps link to the venue
-      dressCode: "Glam Indo-western — sequins and shimmer welcome",
-      note: "Family performances begin at 9:00 PM, followed by dinner and dancing.",
+      dressCode: { en: "Glam Indo-western — sequins and shimmer welcome",
+                   hi: "ग्लैमरस इंडो-वेस्टर्न — चमक-दमक का स्वागत है",
+                   bn: "ঝলমলে ইন্দো-ওয়েস্টার্ন — চুমকি আর চমক স্বাগত" },
+      note: { en: "Family performances begin at 9:00 PM, followed by dinner and dancing.",
+              hi: "रात 9:00 बजे से परिवार की प्रस्तुतियाँ, फिर डिनर और नाच-गाना।",
+              bn: "রাত 9:00টা থেকে পরিবারের পরিবেশনা, তারপর নৈশভোজ আর নাচ-গান।" },
       accent: "#B0306A", palette: ["#B0306A", "#2B2B6E", "#D9B45A"]
     },
     { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
-      name: "Wedding",
+      name: { en: "Wedding", hi: "विवाह", bn: "বিয়ে" },
       date: "2027-02-16", start: "11:00", end: "15:00",
-      venue: "Venue to be announced",                // TODO: venue name
-      address: "Jamshedpur, Jharkhand",              // TODO: full address
+      venue: { en: "Venue to be announced", hi: "स्थान जल्द बताया जाएगा", bn: "স্থান শীঘ্রই জানানো হবে" },   // TODO: venue name
+      address: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },          // TODO: full address
       mapsUrl: "https://www.google.com/maps/search/?api=1&query=Jamshedpur%2C+Jharkhand", // TODO: Google Maps link to the venue
-      dressCode: "Traditional Indian — sarees, lehengas, sherwanis, bandhgalas",
-      note: "The baraat arrives at 11:00 AM; pheras at 12:30 PM. Lunch follows.",
+      dressCode: { en: "Traditional Indian — sarees, lehengas, sherwanis, bandhgalas",
+                   hi: "पारंपरिक भारतीय — साड़ी, लहंगा, शेरवानी, बंदगला",
+                   bn: "ঐতিহ্যবাহী ভারতীয় — শাড়ি, লেহেঙ্গা, শেরওয়ানি, বন্ধগলা" },
+      note: { en: "The baraat arrives at 11:00 AM; pheras at 12:30 PM. Lunch follows.",
+              hi: "बारात सुबह 11:00 बजे पहुँचेगी; फेरे दोपहर 12:30 बजे। उसके बाद भोजन।",
+              bn: "বরযাত্রী পৌঁছবে সকাল 11:00টায়; সাত পাক দুপুর 12:30-এ। তারপর মধ্যাহ্নভোজ।" },
       accent: "#A51C30", palette: ["#A51C30", "#E07B39", "#D4AF37"]
     },
     { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
-      name: "Reception",
+      name: { en: "Reception", hi: "रिसेप्शन", bn: "রিসেপশন" },
       date: "2027-02-16", start: "19:30", end: "23:30",
-      venue: "Venue to be announced",                // TODO: venue name
-      address: "Jamshedpur, Jharkhand",              // TODO: full address
+      venue: { en: "Venue to be announced", hi: "स्थान जल्द बताया जाएगा", bn: "স্থান শীঘ্রই জানানো হবে" },   // TODO: venue name
+      address: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },          // TODO: full address
       mapsUrl: "https://www.google.com/maps/search/?api=1&query=Jamshedpur%2C+Jharkhand", // TODO: Google Maps link to the venue
-      dressCode: "Evening formal — suits, gowns or your finest saree",
-      note: "Dinner, toasts and dancing. Ask us if you need a drop to the station or airport the next day.",
+      dressCode: { en: "Evening formal — suits, gowns or your finest saree",
+                   hi: "शाम का औपचारिक पहनावा — सूट, गाउन या आपकी सबसे सुंदर साड़ी",
+                   bn: "সন্ধ্যার আনুষ্ঠানিক পোশাক — স্যুট, গাউন বা আপনার সেরা শাড়ি" },
+      note: { en: "Dinner, toasts and dancing. Ask us if you need a drop to the station or airport the next day.",
+              hi: "डिनर, शुभकामनाएँ और नाच-गाना। अगले दिन स्टेशन या एयरपोर्ट छोड़ने की ज़रूरत हो तो हमें बताएँ।",
+              bn: "নৈশভোজ, শুভেচ্ছা আর নাচ-গান। পরদিন স্টেশন বা বিমানবন্দরে পৌঁছনোর দরকার হলে আমাদের জানান।" },
       accent: "#2F4A7A", palette: ["#1F2A44", "#2F4A7A", "#C0C0C8"]
     }
   ]
@@ -695,8 +759,6 @@ const CONFIG = {
   const TZID = "Asia/Kolkata";
   const IST_OFFSET_MS = 330 * 60000; // UTC+05:30, India has no daylight saving
   const DAY_MS = 86400000;
-  const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-  const WEEKDAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
   const $ = (sel) => document.querySelector(sel);
   const pad = (n) => String(n).padStart(2, "0");
@@ -705,10 +767,174 @@ const CONFIG = {
   const slugify = (s) => String(s).toLowerCase().normalize("NFKD").replace(/[^\w\s-]/g, "").trim().replace(/[\s_-]+/g, "-") || "event";
   const isHex = (c) => /^#[0-9a-f]{6}$/i.test(c || "");
 
-  const coupleName = CONFIG.couple.join(" & ");
-  const coupleSlug = CONFIG.couple.map(slugify).join("-");
-  const initials = CONFIG.couple.map((n) => String(n).trim().charAt(0).toUpperCase());
+  /* ---------- languages (page wording in English, Hindi and Bengali) ---------- */
+  const LANGS = ["en", "hi", "bn"];
+  const I18N = {
+    en: {
+      lang: "Language", title: "{couple} · Wedding Celebrations", and: " and ",
+      together: "Together with their families",
+      cd_d: "Days", cd_h: "Hours", cd_m: "Mins", cd_s: "Secs",
+      cd_caption: "Counting down to the {name}", cd_aria: "{d} days, {h} hours and {m} minutes until the {name}",
+      begun: "The celebrations have begun!", all_done: "Thank you for celebrating with us.",
+      save_all_long: "Save all events to calendar", view_schedule: "View the schedule", back_top: "Back to top",
+      nav_schedule: "Schedule", nav_photos: "Photos", nav_share: "Share", nav_contacts: "Contacts",
+      sched_eyebrow: "The Schedule", sched_h: "The Celebrations",
+      sched_sub: "All times are India Standard Time. Add a function to your calendar and you’ll get a reminder a day before and two hours before.",
+      banner_h: "Never miss a moment", banner_p: "Save all {n} functions to your calendar in one tap, reminders included.", save_all_short: "Save all events",
+      keep_eyebrow: "Keepsakes", keep_h: "Memories & Sharing",
+      photos_h: "Our shared album", photos_p: "Captured a candid moment? Add it to the album so everyone can relive the celebrations.",
+      copy_tag: "Copy hashtag", open_album: "Open the photo album",
+      qr_loading: "Loading QR code…", qr_failed: "QR code couldn’t load. Check your connection and refresh.",
+      share_h: "Share the invitation", share_p: "Send this page to family and friends, or print the QR code for the welcome desk.",
+      share_wa: "Share on WhatsApp", copy_link: "Copy link", qr_dl: "Download QR", qr_dl_aria: "Download QR code as PNG",
+      qr_scan: "Scan for the schedule, venues & calendar invites", qr_aria: "QR code linking to {url}",
+      contacts_eyebrow: "Here to help", contacts_h: "Need a Hand?", contacts_sub: "For travel, stay, directions or anything at all, give us a call.",
+      call: "Call {name}", wa_contact: "WhatsApp {name}",
+      footer_love: "We can’t wait to celebrate with you.",
+      f_time: "Time", f_venue: "Venue", f_wear: "Wear", next_day: "(next day)", ist: "IST",
+      add_cal: "Add to calendar", add_cal_aria: "Add {name} to calendar", directions: "Directions", directions_aria: "Directions to {name} at {venue}",
+      details_aria: "Show details for {name}",
+      up_next: "Up next", happening: "Happening now", completed: "Completed", thanks_join: "Thank you for joining us",
+      starts_in: "Starts in {t}", until: "Until {t}", knot: "{date} · the knot is tied",
+      sheet_one: "Add {name} to your calendar", sheet_all: "Save all {n} events",
+      sheet_note_one: "Apple, Outlook and Samsung calendars include reminders 1 day and 2 hours before.",
+      sheet_note_all: "Includes reminders 1 day and 2 hours before each event. On Google Calendar? Add events from each card, or import the file at calendar.google.com.",
+      opt_apple: "iPhone, iPad and Mac", opt_google: "Opens Google Calendar", opt_other_b: "Outlook, Samsung & others", opt_other: "Downloads a calendar file (.ics)", cancel: "Cancel",
+      ics_android: "Calendar file downloaded. Tap it in your notifications or Downloads to add it.",
+      ics_desktop: "Calendar file downloaded. Open it to add to your calendar.",
+      ios_other: "If your calendar doesn’t open, open this page in Safari and try again.",
+      link_copied: "Link copied. Paste it anywhere to share.", copy_failed: "Couldn’t copy. Long-press the address bar instead.",
+      tag_copied: "{tag} copied. Tag your photos with it!", tag_failed: "Couldn’t copy the hashtag.", qr_saved: "QR code saved as a PNG, ready to print.",
+      cal_name: "{couple} · Wedding", ics_dress: "Dress code: ", ics_dir: "Directions: ", ics_all: "All details: ",
+      ics_tomorrow: "Tomorrow: {name} · {couple}", ics_2h: "In 2 hours: {name} at {venue}"
+    },
+    hi: {
+      lang: "भाषा", title: "{couple} · विवाह समारोह", and: " और ",
+      together: "परिवारजनों के आशीर्वाद के साथ",
+      cd_d: "दिन", cd_h: "घंटे", cd_m: "मिनट", cd_s: "सेकंड",
+      cd_caption: "{name} की उलटी गिनती", cd_aria: "{name} में {d} दिन, {h} घंटे और {m} मिनट बाकी",
+      begun: "उत्सव शुरू हो चुका है!", all_done: "हमारे साथ खुशियाँ मनाने के लिए धन्यवाद।",
+      save_all_long: "सभी कार्यक्रम कैलेंडर में जोड़ें", view_schedule: "कार्यक्रम देखें", back_top: "ऊपर जाएँ",
+      nav_schedule: "कार्यक्रम", nav_photos: "फ़ोटो", nav_share: "शेयर", nav_contacts: "संपर्क",
+      sched_eyebrow: "कार्यक्रम", sched_h: "शुभ अवसर",
+      sched_sub: "सभी समय भारतीय मानक समय (IST) में हैं। किसी कार्यक्रम को कैलेंडर में जोड़ें, आपको एक दिन पहले और दो घंटे पहले याद दिलाया जाएगा।",
+      banner_h: "कोई पल न छूटे", banner_p: "एक ही टैप में सभी {n} कार्यक्रम कैलेंडर में जोड़ें, रिमाइंडर के साथ।", save_all_short: "सभी कार्यक्रम जोड़ें",
+      keep_eyebrow: "यादें", keep_h: "यादें और साझेदारी",
+      photos_h: "हमारा साझा एल्बम", photos_p: "कोई ख़ास पल कैमरे में कैद किया? उसे एल्बम में जोड़ें, ताकि सब उन यादों को फिर से जी सकें।",
+      copy_tag: "हैशटैग कॉपी करें", open_album: "फ़ोटो एल्बम खोलें",
+      qr_loading: "QR कोड लोड हो रहा है…", qr_failed: "QR कोड लोड नहीं हुआ। इंटरनेट जाँचकर पेज दोबारा खोलें।",
+      share_h: "निमंत्रण भेजें", share_p: "यह पेज परिवार और दोस्तों को भेजें, या स्वागत डेस्क के लिए QR कोड प्रिंट करें।",
+      share_wa: "WhatsApp पर भेजें", copy_link: "लिंक कॉपी करें", qr_dl: "QR डाउनलोड", qr_dl_aria: "QR कोड PNG में डाउनलोड करें",
+      qr_scan: "कार्यक्रम, स्थान और कैलेंडर के लिए स्कैन करें", qr_aria: "{url} का QR कोड",
+      contacts_eyebrow: "मदद के लिए", contacts_h: "कोई मदद चाहिए?", contacts_sub: "यात्रा, ठहरने, रास्ते या किसी भी बात के लिए हमें फ़ोन करें।",
+      call: "{name} को कॉल करें", wa_contact: "{name} को WhatsApp करें",
+      footer_love: "आपके साथ यह ख़ुशी मनाने का इंतज़ार है।",
+      f_time: "समय", f_venue: "स्थान", f_wear: "पहनावा", next_day: "(अगले दिन)", ist: "IST",
+      add_cal: "कैलेंडर में जोड़ें", add_cal_aria: "{name} को कैलेंडर में जोड़ें", directions: "रास्ता देखें", directions_aria: "{name} — {venue} का रास्ता",
+      details_aria: "{name} का विवरण देखें",
+      up_next: "अगला कार्यक्रम", happening: "अभी चल रहा है", completed: "संपन्न", thanks_join: "आने के लिए धन्यवाद",
+      starts_in: "{t} में शुरू", until: "{t} तक", knot: "{date} · बँधा गठबंधन",
+      sheet_one: "{name} को कैलेंडर में जोड़ें", sheet_all: "सभी {n} कार्यक्रम जोड़ें",
+      sheet_note_one: "Apple, Outlook और Samsung कैलेंडर में 1 दिन और 2 घंटे पहले रिमाइंडर मिलेगा।",
+      sheet_note_all: "हर कार्यक्रम से 1 दिन और 2 घंटे पहले रिमाइंडर। Google Calendar इस्तेमाल करते हैं? हर कार्ड से अलग-अलग जोड़ें, या calendar.google.com पर फ़ाइल इम्पोर्ट करें।",
+      opt_apple: "iPhone, iPad और Mac", opt_google: "Google Calendar खुलेगा", opt_other_b: "Outlook, Samsung और अन्य", opt_other: "कैलेंडर फ़ाइल (.ics) डाउनलोड होगी", cancel: "रद्द करें",
+      ics_android: "कैलेंडर फ़ाइल डाउनलोड हो गई। जोड़ने के लिए नोटिफ़िकेशन या Downloads में उस पर टैप करें।",
+      ics_desktop: "कैलेंडर फ़ाइल डाउनलोड हो गई। कैलेंडर में जोड़ने के लिए उसे खोलें।",
+      ios_other: "अगर कैलेंडर न खुले, तो यह पेज Safari में खोलकर फिर कोशिश करें।",
+      link_copied: "लिंक कॉपी हो गया। कहीं भी पेस्ट करके भेजें।", copy_failed: "कॉपी नहीं हो पाया। एड्रेस बार को देर तक दबाकर कॉपी करें।",
+      tag_copied: "{tag} कॉपी हो गया। अपनी फ़ोटो में इसे टैग करें!", tag_failed: "हैशटैग कॉपी नहीं हो पाया।", qr_saved: "QR कोड PNG में सेव हो गया, प्रिंट के लिए तैयार।",
+      cal_name: "{couple} · विवाह", ics_dress: "पहनावा: ", ics_dir: "रास्ता: ", ics_all: "पूरी जानकारी: ",
+      ics_tomorrow: "कल: {name} · {couple}", ics_2h: "2 घंटे में: {name}, {venue}"
+    },
+    bn: {
+      lang: "ভাষা", title: "{couple} · বিবাহ অনুষ্ঠান", and: " ও ",
+      together: "পরিবারের আশীর্বাদে",
+      cd_d: "দিন", cd_h: "ঘণ্টা", cd_m: "মিনিট", cd_s: "সেকেন্ড",
+      cd_caption: "{name}-এর ক্ষণগণনা", cd_aria: "{name}-এর আর {d} দিন, {h} ঘণ্টা ও {m} মিনিট বাকি",
+      begun: "উৎসব শুরু হয়ে গেছে!", all_done: "আমাদের সঙ্গে আনন্দ ভাগ করে নেওয়ার জন্য ধন্যবাদ।",
+      save_all_long: "সব অনুষ্ঠান ক্যালেন্ডারে রাখুন", view_schedule: "অনুষ্ঠানসূচি দেখুন", back_top: "উপরে যান",
+      nav_schedule: "অনুষ্ঠান", nav_photos: "ছবি", nav_share: "শেয়ার", nav_contacts: "যোগাযোগ",
+      sched_eyebrow: "অনুষ্ঠানসূচি", sched_h: "শুভ অনুষ্ঠান",
+      sched_sub: "সব সময় ভারতীয় সময় (IST) অনুযায়ী। কোনো অনুষ্ঠান ক্যালেন্ডারে রাখলে এক দিন আগে আর দু'ঘণ্টা আগে মনে করিয়ে দেওয়া হবে।",
+      banner_h: "কোনো মুহূর্ত যেন বাদ না যায়", banner_p: "এক ট্যাপেই সব {n}টি অনুষ্ঠান ক্যালেন্ডারে রাখুন, রিমাইন্ডার সহ।", save_all_short: "সব অনুষ্ঠান রাখুন",
+      keep_eyebrow: "স্মৃতি", keep_h: "স্মৃতি ও শেয়ার",
+      photos_h: "আমাদের যৌথ অ্যালবাম", photos_p: "কোনো সুন্দর মুহূর্ত ক্যামেরাবন্দি করেছেন? অ্যালবামে যোগ করুন, যাতে সবাই সেই আনন্দ আবার উপভোগ করতে পারে।",
+      copy_tag: "হ্যাশট্যাগ কপি করুন", open_album: "ছবির অ্যালবাম খুলুন",
+      qr_loading: "QR কোড লোড হচ্ছে…", qr_failed: "QR কোড লোড হয়নি। ইন্টারনেট দেখে পাতাটি আবার খুলুন।",
+      share_h: "আমন্ত্রণ পাঠান", share_p: "এই পাতাটি পরিবার ও বন্ধুদের পাঠান, অথবা অভ্যর্থনা ডেস্কের জন্য QR কোড প্রিন্ট করুন।",
+      share_wa: "WhatsApp-এ পাঠান", copy_link: "লিংক কপি", qr_dl: "QR ডাউনলোড", qr_dl_aria: "QR কোড PNG হিসেবে ডাউনলোড করুন",
+      qr_scan: "অনুষ্ঠানসূচি, স্থান ও ক্যালেন্ডারের জন্য স্ক্যান করুন", qr_aria: "{url}-এর QR কোড",
+      contacts_eyebrow: "সাহায্যের জন্য", contacts_h: "কোনো সাহায্য লাগবে?", contacts_sub: "যাতায়াত, থাকা, পথ বা যেকোনো দরকারে আমাদের ফোন করুন।",
+      call: "{name}-কে ফোন করুন", wa_contact: "{name}-কে WhatsApp করুন",
+      footer_love: "আপনাদের সঙ্গে এই আনন্দ ভাগ করে নেওয়ার অপেক্ষায় রইলাম।",
+      f_time: "সময়", f_venue: "স্থান", f_wear: "পোশাক", next_day: "(পরদিন)", ist: "IST",
+      add_cal: "ক্যালেন্ডারে রাখুন", add_cal_aria: "{name} ক্যালেন্ডারে রাখুন", directions: "পথনির্দেশ", directions_aria: "{name} — {venue}-এর পথ",
+      details_aria: "{name}-এর বিস্তারিত দেখুন",
+      up_next: "পরবর্তী", happening: "এখন চলছে", completed: "সম্পন্ন", thanks_join: "আসার জন্য ধন্যবাদ",
+      starts_in: "{t} পরে শুরু", until: "{t} পর্যন্ত", knot: "{date} · গাঁটছড়া বাঁধা",
+      sheet_one: "{name} ক্যালেন্ডারে রাখুন", sheet_all: "সব {n}টি অনুষ্ঠান রাখুন",
+      sheet_note_one: "Apple, Outlook ও Samsung ক্যালেন্ডারে 1 দিন ও 2 ঘণ্টা আগে রিমাইন্ডার থাকবে।",
+      sheet_note_all: "প্রতিটি অনুষ্ঠানের 1 দিন ও 2 ঘণ্টা আগে রিমাইন্ডার। Google Calendar ব্যবহার করেন? প্রতিটি কার্ড থেকে আলাদা করে যোগ করুন, অথবা calendar.google.com-এ ফাইলটি ইমপোর্ট করুন।",
+      opt_apple: "iPhone, iPad ও Mac", opt_google: "Google Calendar খুলবে", opt_other_b: "Outlook, Samsung ও অন্যান্য", opt_other: "ক্যালেন্ডার ফাইল (.ics) ডাউনলোড হবে", cancel: "বাতিল",
+      ics_android: "ক্যালেন্ডার ফাইল ডাউনলোড হয়েছে। যোগ করতে নোটিফিকেশন বা Downloads-এ ট্যাপ করুন।",
+      ics_desktop: "ক্যালেন্ডার ফাইল ডাউনলোড হয়েছে। ক্যালেন্ডারে যোগ করতে ফাইলটি খুলুন।",
+      ios_other: "ক্যালেন্ডার না খুললে পাতাটি Safari-তে খুলে আবার চেষ্টা করুন।",
+      link_copied: "লিংক কপি হয়েছে। যেকোনো জায়গায় পেস্ট করে পাঠান।", copy_failed: "কপি করা গেল না। অ্যাড্রেস বার চেপে ধরে কপি করুন।",
+      tag_copied: "{tag} কপি হয়েছে। আপনার ছবিতে এটি ট্যাগ করুন!", tag_failed: "হ্যাশট্যাগ কপি করা গেল না।", qr_saved: "QR কোড PNG হিসেবে সেভ হয়েছে, প্রিন্টের জন্য তৈরি।",
+      cal_name: "{couple} · বিবাহ", ics_dress: "পোশাক: ", ics_dir: "পথনির্দেশ: ", ics_all: "সব তথ্য: ",
+      ics_tomorrow: "আগামীকাল: {name} · {couple}", ics_2h: "2 ঘণ্টা পরে: {name}, {venue}"
+    }
+  };
+  const plural = (n, one, many) => n === 1 ? one : many;
+  const L10N = {
+    en: {
+      months: ["January","February","March","April","May","June","July","August","September","October","November","December"],
+      days: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      dayN: (n) => `Day ${n}`,
+      part: (h) => h < 12 ? "Morning" : h < 17 ? "Afternoon" : "Evening",
+      time: (h, hm) => `${hm} ${h < 12 ? "AM" : "PM"}`,
+      dur: (h, m) => [h ? `${h} ${plural(h, "hr", "hrs")}` : "", m ? `${m} min` : ""].filter(Boolean).join(" "),
+      days_: (d) => `${d} ${plural(d, "day", "days")}`
+    },
+    hi: {
+      months: ["जनवरी","फ़रवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितंबर","अक्टूबर","नवंबर","दिसंबर"],
+      monthsShort: ["जन","फ़र","मार्च","अप्रै","मई","जून","जुला","अग","सित","अक्टू","नव","दिस"],
+      days: ["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"],
+      daysShort: ["रवि","सोम","मंगल","बुध","गुरु","शुक्र","शनि"],
+      dayN: (n) => ["पहला दिन","दूसरा दिन","तीसरा दिन","चौथा दिन","पाँचवाँ दिन"][n - 1] || `दिन ${n}`,
+      part: (h) => h < 12 ? "सुबह" : h < 16 ? "दोपहर" : "शाम",
+      time: (h, hm) => `${h < 4 ? "रात" : h < 12 ? "सुबह" : h < 16 ? "दोपहर" : h < 19 ? "शाम" : "रात"} ${hm}`,
+      dur: (h, m) => [h ? `${h} ${plural(h, "घंटा", "घंटे")}` : "", m ? `${m} मिनट` : ""].filter(Boolean).join(" "),
+      days_: (d) => `${d} दिन`
+    },
+    bn: {
+      months: ["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"],
+      monthsShort: ["জানু","ফেব্রু","মার্চ","এপ্রি","মে","জুন","জুলা","আগ","সেপ্টে","অক্টো","নভে","ডিসে"],
+      days: ["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
+      daysShort: ["রবি","সোম","মঙ্গল","বুধ","বৃহঃ","শুক্র","শনি"],
+      dayN: (n) => ["প্রথম দিন","দ্বিতীয় দিন","তৃতীয় দিন","চতুর্থ দিন","পঞ্চম দিন"][n - 1] || `দিন ${n}`,
+      part: (h) => h < 12 ? "সকাল" : h < 16 ? "দুপুর" : "সন্ধ্যা",
+      time: (h, hm) => `${h < 4 ? "রাত" : h < 12 ? "সকাল" : h < 16 ? "দুপুর" : h < 18 ? "বিকেল" : h < 20 ? "সন্ধ্যা" : "রাত"} ${hm}`,
+      dur: (h, m) => [h ? `${h} ঘণ্টা` : "", m ? `${m} মিনিট` : ""].filter(Boolean).join(" "),
+      days_: (d) => `${d} দিন`
+    }
+  };
+  let LANG = "en";
+  const loc = () => L10N[LANG] || L10N.en;
+  const isObj = (v) => v && typeof v === "object" && !Array.isArray(v);
+  const tr = (v) => isObj(v) ? (v[LANG] != null && v[LANG] !== "" ? v[LANG] : (v.en || "")) : (v == null ? "" : String(v));
+  const enOf = (v) => isObj(v) ? (v.en || "") : (v == null ? "" : String(v));
+  function T(key, vars) {
+    let str = (I18N[LANG] && I18N[LANG][key] != null) ? I18N[LANG][key] : I18N.en[key];
+    if (str == null) return key;
+    if (vars) str = str.replace(/\{(\w+)\}/g, (m, k) => vars[k] != null ? vars[k] : m);
+    return str;
+  }
+
+  const couple = () => CONFIG.couple.map(tr).join(" & ");
+  const coupleSlug = CONFIG.couple.map((n) => slugify(enOf(n))).join("-");
   const siteUrl = CONFIG.siteUrl || (location.origin + location.pathname);
+  const pageUrl = () => LANG === "en" ? siteUrl : siteUrl + (siteUrl.includes("?") ? "&" : "?") + "lang=" + LANG;
   const uidHost = (() => { try { return new URL(siteUrl).hostname; } catch (e) { return "wedding.local"; } })();
 
   const ua = navigator.userAgent;
@@ -728,26 +954,27 @@ const CONFIG = {
     const d = new Date(ms + IST_OFFSET_MS);
     return { y: d.getUTCFullYear(), m: d.getUTCMonth() + 1, d: d.getUTCDate(), h: d.getUTCHours(), mi: d.getUTCMinutes(), wd: d.getUTCDay() };
   }
-  const fmtDateLong = (ms) => { const p = istParts(ms); return `${WEEKDAYS[p.wd]}, ${p.d} ${MONTHS[p.m - 1]} ${p.y}`; };
-  const fmtDateShort = (ms) => { const p = istParts(ms); return `${WEEKDAYS[p.wd].slice(0, 3)}, ${p.d} ${MONTHS[p.m - 1].slice(0, 3)}`; };
-  const fmtTime = (ms) => { const p = istParts(ms); const h12 = p.h % 12 || 12; return `${h12}:${pad(p.mi)} ${p.h < 12 ? "AM" : "PM"}`; };
+  const monthShort = (i) => loc().monthsShort ? loc().monthsShort[i] : loc().months[i].slice(0, 3);
+  const dayShort = (i) => loc().daysShort ? loc().daysShort[i] : loc().days[i].slice(0, 3);
+  const fmtDateLong = (ms) => { const p = istParts(ms); return `${loc().days[p.wd]}, ${p.d} ${loc().months[p.m - 1]} ${p.y}`; };
+  const fmtDateShort = (ms) => { const p = istParts(ms); return `${dayShort(p.wd)}, ${p.d} ${monthShort(p.m - 1)}`; };
+  const fmtTime = (ms) => { const p = istParts(ms); return loc().time(p.h, `${p.h % 12 || 12}:${pad(p.mi)}`); };
   function fmtRange(a, b) {
-    const p = istParts(a), q = istParts(b), mon = (x) => MONTHS[x.m - 1];
+    const p = istParts(a), q = istParts(b), mon = (x) => loc().months[x.m - 1];
     if (p.y === q.y && p.m === q.m) return p.d === q.d ? `${p.d} ${mon(p)} ${p.y}` : `${p.d} – ${q.d} ${mon(p)} ${p.y}`;
-    if (p.y === q.y) return `${p.d} ${mon(p).slice(0, 3)} – ${q.d} ${mon(q).slice(0, 3)} ${p.y}`;
-    return `${p.d} ${mon(p).slice(0, 3)} ${p.y} – ${q.d} ${mon(q).slice(0, 3)} ${q.y}`;
+    if (p.y === q.y) return `${p.d} ${monthShort(p.m - 1)} – ${q.d} ${monthShort(q.m - 1)} ${p.y}`;
+    return `${p.d} ${monthShort(p.m - 1)} ${p.y} – ${q.d} ${monthShort(q.m - 1)} ${q.y}`;
   }
   function fmtDuration(ms) {
-    const mins = Math.round(ms / 60000), h = Math.floor(mins / 60), m = mins % 60;
-    return [h ? `${h} hr${h > 1 ? "s" : ""}` : "", m ? `${m} min` : ""].filter(Boolean).join(" ");
+    const mins = Math.round(ms / 60000);
+    return loc().dur(Math.floor(mins / 60), mins % 60);
   }
   function fmtUntil(ms) {
-    const d = Math.floor(ms / DAY_MS), h = Math.floor((ms % DAY_MS) / 3600000), m = Math.max(1, Math.ceil((ms % 3600000) / 60000));
-    if (d >= 1) return `${d} day${d > 1 ? "s" : ""}${h ? `, ${h} hr${h > 1 ? "s" : ""}` : ""}`;
-    if (h >= 1) return `${h} hr${h > 1 ? "s" : ""} ${m % 60 ? (m % 60) + " min" : ""}`.trim();
-    return `${m} min`;
+    const total = Math.max(1, Math.ceil(ms / 60000)), d = Math.floor(total / 1440), h = Math.floor((total % 1440) / 60), m = total % 60;
+    if (d >= 1) return [loc().days_(d), h ? loc().dur(h, 0) : ""].filter(Boolean).join(", ");
+    return loc().dur(h, m);
   }
-  const partOfDay = (ms) => { const h = istParts(ms).h; return h < 12 ? "Morning" : h < 17 ? "Afternoon" : "Evening"; };
+  const partOfDay = (ms) => loc().part(istParts(ms).h);
   const icsLocal = (ms) => { const p = istParts(ms); return `${p.y}${pad(p.m)}${pad(p.d)}T${pad(p.h)}${pad(p.mi)}00`; };
   const icsUTC = (ms) => new Date(ms).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
 
@@ -771,7 +998,7 @@ const CONFIG = {
   }
   function motifFor(ev) {
     if (ev.motif) return ev.motif;
-    const n = String(ev.name).toLowerCase();
+    const n = enOf(ev.name).toLowerCase();
     if (/haldi|pithi|ubtan/.test(n)) return "haldi";
     if (/meh?e?ndi|henna/.test(n)) return "mehendi";
     if (/sangeet|cocktail|garba|music/.test(n)) return "sangeet";
@@ -785,11 +1012,16 @@ const CONFIG = {
     const startMs = parseIST(ev.date, ev.start);
     let endMs = parseIST(ev.date, ev.end || ev.start);
     if (endMs <= startMs) endMs += DAY_MS; // ends after midnight
-    return Object.assign({}, ev, { startMs, endMs, id: "event-" + i, slug: slugify(ev.name) });
+    return Object.assign({}, ev, { startMs, endMs, id: "event-" + i, slug: slugify(enOf(ev.name)) });
   }).sort((a, b) => a.startMs - b.startMs);
+  const knotIndex = (() => {
+    if (events.length < 2) return -1;
+    const k = events.findIndex((e) => motifFor(e) === "wedding");
+    return k >= 1 ? k : Math.max(1, events.length - 2);
+  })();
   const dayNumbers = {};
   events.forEach((ev) => { if (!(ev.date in dayNumbers)) dayNumbers[ev.date] = Object.keys(dayNumbers).length + 1; });
-  const dateRange = events.length ? fmtRange(events[0].startMs, events[events.length - 1].startMs) : "";
+  const dateRange = () => events.length ? fmtRange(events[0].startMs, events[events.length - 1].startMs) : "";
 
   /* ---------- .ics generation (RFC 5545) ---------- */
   const icsText = (s) => String(s == null ? "" : s).replace(/\\/g, "\\\\").replace(/\r?\n/g, "\\n").replace(/;/g, "\\;").replace(/,/g, "\\,");
@@ -804,16 +1036,16 @@ const CONFIG = {
     return out;
   }
   function eventDescription(ev) {
-    const top = [ev.dressCode ? "Dress code: " + ev.dressCode : "", ev.note || ""].filter(Boolean);
-    const links = [ev.mapsUrl ? "Directions: " + ev.mapsUrl : "", "All details: " + siteUrl].filter(Boolean);
+    const top = [tr(ev.dressCode) ? T("ics_dress") + tr(ev.dressCode) : "", tr(ev.note)].filter(Boolean);
+    const links = [ev.mapsUrl ? T("ics_dir") + ev.mapsUrl : "", T("ics_all") + pageUrl()].filter(Boolean);
     return (top.length ? top.join("\n") + "\n\n" : "") + links.join("\n");
   }
   function buildICS(list) {
     const stamp = icsUTC(Date.now());
     const L = [
-      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//" + icsText(coupleName) + "//Wedding Guest Page//EN",
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//" + icsText(coupleSlug) + "//Wedding Guest Page//EN",
       "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
-      "X-WR-CALNAME:" + icsText(coupleName + " · Wedding"), "X-WR-TIMEZONE:" + TZID,
+      "X-WR-CALNAME:" + icsText(T("cal_name", { couple: couple() })), "X-WR-TIMEZONE:" + TZID,
       "BEGIN:VTIMEZONE", "TZID:" + TZID, "X-LIC-LOCATION:" + TZID,
       "BEGIN:STANDARD", "DTSTART:19700101T000000", "TZOFFSETFROM:+0530", "TZOFFSETTO:+0530", "TZNAME:IST", "END:STANDARD",
       "END:VTIMEZONE"
@@ -825,13 +1057,13 @@ const CONFIG = {
         "DTSTAMP:" + stamp,
         "DTSTART;TZID=" + TZID + ":" + icsLocal(ev.startMs),
         "DTEND;TZID=" + TZID + ":" + icsLocal(ev.endMs),
-        "SUMMARY:" + icsText(ev.name + " · " + coupleName),
-        "LOCATION:" + icsText([ev.venue, ev.address].filter(Boolean).join(", ")),
+        "SUMMARY:" + icsText(tr(ev.name) + " · " + couple()),
+        "LOCATION:" + icsText([tr(ev.venue), tr(ev.address)].filter(Boolean).join(", ")),
         "DESCRIPTION:" + icsText(eventDescription(ev)),
-        "URL:" + siteUrl,
+        "URL:" + pageUrl(),
         "STATUS:CONFIRMED", "TRANSP:OPAQUE", "SEQUENCE:0",
-        "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsText("Tomorrow: " + ev.name + " · " + coupleName), "TRIGGER:-P1D", "END:VALARM",
-        "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsText("In 2 hours: " + ev.name + " at " + (ev.venue || "")), "TRIGGER:-PT2H", "END:VALARM",
+        "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsText(T("ics_tomorrow", { name: tr(ev.name), couple: couple() })), "TRIGGER:-P1D", "END:VALARM",
+        "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsText(T("ics_2h", { name: tr(ev.name), venue: tr(ev.venue) })), "TRIGGER:-PT2H", "END:VALARM",
         "END:VEVENT"
       );
     });
@@ -850,27 +1082,24 @@ const CONFIG = {
 
   function deliverICS(list) {
     const text = buildICS(list);
-    const many = list.length > 1;
     if (isIOS) {
       // iOS Safari opens a data: calendar link straight into its "Add to Calendar" sheet.
-      if (isIOSOtherBrowser) toast("If your calendar doesn’t open, open this page in Safari and try again.");
+      if (isIOSOtherBrowser) toast(T("ios_other"));
       window.location.href = "data:text/calendar;charset=utf-8," + encodeURIComponent(text);
       return;
     }
     downloadBlob(new Blob([text], { type: "text/calendar;charset=utf-8" }), icsFilename(list));
-    toast(isAndroid
-      ? `Calendar file downloaded. Tap it in your notifications or Downloads to add ${many ? "the events" : "it"}.`
-      : `Calendar file downloaded. Open it to add ${many ? "all " + list.length + " events" : "the event"} to your calendar.`);
+    toast(T(isAndroid ? "ics_android" : "ics_desktop"));
   }
 
   function googleCalUrl(ev) {
     const p = new URLSearchParams({
       action: "TEMPLATE",
-      text: ev.name + " · " + coupleName,
+      text: tr(ev.name) + " · " + couple(),
       dates: icsLocal(ev.startMs) + "/" + icsLocal(ev.endMs),
       ctz: TZID,
       details: eventDescription(ev),
-      location: [ev.venue, ev.address].filter(Boolean).join(", ")
+      location: [tr(ev.venue), tr(ev.address)].filter(Boolean).join(", ")
     });
     return "https://calendar.google.com/calendar/render?" + p.toString();
   }
@@ -882,14 +1111,12 @@ const CONFIG = {
     if (!sheet || typeof sheet.showModal !== "function") { deliverICS(list); return; }
     sheetList = list;
     const many = list.length > 1, ev = list[0];
-    $("#sheet-title").textContent = many ? `Save all ${list.length} events` : `Add ${ev.name} to your calendar`;
-    $("#sheet-sub").textContent = many ? `${dateRange} · ${coupleName}` : `${fmtDateShort(ev.startMs)} · ${fmtTime(ev.startMs)} IST`;
+    $("#sheet-title").textContent = many ? T("sheet_all", { n: list.length }) : T("sheet_one", { name: tr(ev.name) });
+    $("#sheet-sub").textContent = many ? `${dateRange()} · ${couple()}` : `${fmtDateShort(ev.startMs)} · ${fmtTime(ev.startMs)} IST`;
     const g = $("#opt-google");
     g.hidden = many;
     if (!many) g.href = googleCalUrl(ev);
-    $("#sheet-note").textContent = many
-      ? "Includes reminders 1 day and 2 hours before each event. On Google Calendar? Add events from each card, or import the file at calendar.google.com."
-      : "Apple, Outlook and Samsung calendars include reminders 1 day and 2 hours before.";
+    $("#sheet-note").textContent = T(many ? "sheet_note_all" : "sheet_note_one");
     sheet.showModal();
   }
   if (sheet) {
@@ -935,26 +1162,29 @@ const CONFIG = {
   window.addEventListener("resize", () => { clearTimeout(fitNames.t); fitNames.t = setTimeout(fitNames, 120); });
 
   function renderHeader() {
-    const [a, b] = CONFIG.couple.map(escHtml);
-    $("#names").innerHTML = `<span class="nm">${a}</span><span class="amp" aria-hidden="true">&amp;</span><span class="sr-only"> and </span><span class="nm">${b}</span>`;
+    const [a, b] = CONFIG.couple.map((n) => escHtml(tr(n)));
+    $("#names").innerHTML = `<span class="nm">${a}</span><span class="amp" aria-hidden="true">&amp;</span><span class="sr-only">${escHtml(T("and"))}</span><span class="nm">${b}</span>`;
     fitNames();
     const mono = '<svg class="mono-lotus" viewBox="0 0 64 32" aria-hidden="true"><use href="#m-lotus"/></svg>';
     $("#mono-sm").innerHTML = mono; $("#mono-lg").innerHTML = mono;
-    document.title = coupleName + " · Wedding Celebrations";
-    $("#when").textContent = dateRange;
-    $("#where").textContent = CONFIG.city || "";
-    $("#footer-names").textContent = coupleName;
-    $("#footer-date").innerHTML = [dateRange, CONFIG.city].filter(Boolean).map((x) => `<span>${escHtml(x)}</span>`).join("");
+    document.title = T("title", { couple: couple() });
+    $("#when").textContent = dateRange();
+    $("#where").textContent = tr(CONFIG.city);
+    $("#footer-names").textContent = couple();
+    $("#footer-date").innerHTML = [dateRange(), tr(CONFIG.city)].filter(Boolean).map((x) => `<span>${escHtml(x)}</span>`).join("");
     $("#footer-tag").textContent = CONFIG.hashtag || "";
-    const bl = $("#blessing"); if (CONFIG.blessing) bl.textContent = CONFIG.blessing; else bl.remove();
-    const w = $("#welcome"); if (CONFIG.welcome) w.textContent = CONFIG.welcome; else w.remove();
-    $("#save-banner-text").textContent = `Save all ${events.length} functions to your calendar in one tap, reminders included.`;
+    const bl = $("#blessing"); if (bl) { if (CONFIG.blessing) bl.textContent = tr(CONFIG.blessing); else bl.hidden = true; }
+    const w = $("#welcome"); if (w) { const wt = tr(CONFIG.welcome); w.textContent = wt; w.hidden = !wt; }
+    $("#save-banner-text").textContent = T("banner_p", { n: events.length });
+    $("#tn-l").textContent = tr(CONFIG.couple[0]);
+    $("#tn-r").textContent = tr(CONFIG.couple[1]);
   }
 
   function renderEvents() {
     $("#events").innerHTML = events.map((ev) => {
       const p = istParts(ev.startMs), c = isHex(ev.accent) ? ev.accent : "#C9A25B";
       const nextDay = istParts(ev.endMs).d !== p.d;
+      const name = escHtml(tr(ev.name)), venue = escHtml(tr(ev.venue)), dress = tr(ev.dressCode), note = tr(ev.note);
       const swatches = (ev.palette || []).filter(isHex).map((s) => `<span style="--s:${s}"></span>`).join("");
       return `
       <li class="ev" id="${ev.id}" data-reveal style="--c:${c};--c-soft:${softColor(c, .11)};--c-ink:${inkFor(c)}">
@@ -963,40 +1193,41 @@ const CONFIG = {
             <svg class="ev-watermark" aria-hidden="true"><use href="#m-${motifFor(ev)}"/></svg>
             <div class="ev-date">
               <span class="sr-only">${fmtDateLong(ev.startMs)}</span>
-              <span class="ev-mon" aria-hidden="true">${MONTHS[p.m - 1].slice(0, 3)}</span>
+              <span class="ev-mon" aria-hidden="true">${monthShort(p.m - 1)}</span>
               <span class="ev-d" aria-hidden="true">${p.d}</span>
-              <span class="ev-wd" aria-hidden="true">${WEEKDAYS[p.wd].slice(0, 3)}</span>
+              <span class="ev-wd" aria-hidden="true">${dayShort(p.wd)}</span>
             </div>
             <div class="ev-titles">
-              <p class="ev-meta">Day ${dayNumbers[ev.date]} · ${partOfDay(ev.startMs)}</p>
-              <h3 id="${ev.id}-h">${escHtml(ev.name)}</h3>
+              <p class="ev-meta">${loc().dayN(dayNumbers[ev.date])} · ${partOfDay(ev.startMs)}</p>
+              <h3 id="${ev.id}-h">${name}</h3>
               <p class="ev-live" hidden><span class="dot" aria-hidden="true"></span><span class="pill"></span><span class="ev-live-t"></span></p>
             </div>
-            <button type="button" class="ev-toggle" aria-expanded="false" aria-controls="${ev.id}-body" aria-label="Show details for ${escHtml(ev.name)}"><svg class="i" aria-hidden="true"><use href="#i-chev-down"/></svg></button>
+            <button type="button" class="ev-toggle" aria-expanded="false" aria-controls="${ev.id}-body" aria-label="${escHtml(T("details_aria", { name: tr(ev.name) }))}"><svg class="i" aria-hidden="true"><use href="#i-chev-down"/></svg></button>
           </div>
           <div class="ev-body" id="${ev.id}-body">
             <dl class="facts">
-              <div class="fact"><dt>Time</dt><dd><span class="strong">${fmtTime(ev.startMs)} – ${fmtTime(ev.endMs)}${nextDay ? " <small>(next day)</small>" : ""}</span><span class="sub">${fmtDateLong(ev.startMs)}</span><span class="sub">${fmtDuration(ev.endMs - ev.startMs)} · IST</span></dd></div>
-              <div class="fact"><dt>Venue</dt><dd><span class="strong">${escHtml(ev.venue)}</span><span class="sub">${escHtml(ev.address)}</span></dd></div>
-              ${ev.dressCode ? `<div class="fact"><dt>Wear</dt><dd>${escHtml(ev.dressCode)}${swatches ? `<span class="swatches" aria-hidden="true">${swatches}</span>` : ""}</dd></div>` : ""}
+              <div class="fact"><dt>${T("f_time")}</dt><dd><span class="strong">${fmtTime(ev.startMs)} – ${fmtTime(ev.endMs)}${nextDay ? ` <small>${T("next_day")}</small>` : ""}</span><span class="sub">${fmtDateLong(ev.startMs)}</span><span class="sub">${fmtDuration(ev.endMs - ev.startMs)} · ${T("ist")}</span></dd></div>
+              <div class="fact"><dt>${T("f_venue")}</dt><dd><span class="strong">${venue}</span><span class="sub">${escHtml(tr(ev.address))}</span></dd></div>
+              ${dress ? `<div class="fact"><dt>${T("f_wear")}</dt><dd>${escHtml(dress)}${swatches ? `<span class="swatches" aria-hidden="true">${swatches}</span>` : ""}</dd></div>` : ""}
             </dl>
-            ${ev.note ? `<p class="ev-note">${escHtml(ev.note)}</p>` : ""}
+            ${note ? `<p class="ev-note">${escHtml(note)}</p>` : ""}
             <div class="ev-actions">
-              <button type="button" class="ev-act" data-cal="${ev.id}" aria-label="Add ${escHtml(ev.name)} to calendar"><svg class="i" aria-hidden="true"><use href="#i-cal-add"/></svg>Add to calendar</button>
-              <a class="ev-act" href="${escHtml(safeHref(ev.mapsUrl))}" target="_blank" rel="noopener" aria-label="Directions to ${escHtml(ev.name)} at ${escHtml(ev.venue)}"><svg class="i" aria-hidden="true"><use href="#i-nav"/></svg>Directions</a>
+              <button type="button" class="ev-act" data-cal="${ev.id}" aria-label="${escHtml(T("add_cal_aria", { name: tr(ev.name) }))}"><svg class="i" aria-hidden="true"><use href="#i-cal-add"/></svg>${T("add_cal")}</button>
+              <a class="ev-act" href="${escHtml(safeHref(ev.mapsUrl))}" target="_blank" rel="noopener" aria-label="${escHtml(T("directions_aria", { name: tr(ev.name), venue: tr(ev.venue) }))}"><svg class="i" aria-hidden="true"><use href="#i-nav"/></svg>${T("directions")}</a>
             </div>
           </div>
         </article>
       </li>`;
     }).join("");
+    if (knotIndex > 0) $("#events").children[knotIndex].classList.add("knot-next");
   }
 
   function renderLinks() {
     $("#hashtag").textContent = CONFIG.hashtag || "";
-    if (!CONFIG.hashtag) $("#hashtag-btn").remove();
+    const tb = $("#hashtag-btn"); if (tb) tb.hidden = !CONFIG.hashtag;
     $("#photos-btn").href = safeHref(CONFIG.photoAlbumUrl);
-    const msg = String(CONFIG.shareMessage || "{url}");
-    const text = msg.includes("{url}") ? msg.replace("{url}", siteUrl) : msg + " " + siteUrl;
+    const msg = tr(CONFIG.shareMessage) || "{url}";
+    const text = msg.includes("{url}") ? msg.replace("{url}", pageUrl()) : msg + " " + pageUrl();
     $("#wa-btn").href = "https://wa.me/?text=" + encodeURIComponent(text);
   }
 
@@ -1004,14 +1235,15 @@ const CONFIG = {
   function renderContacts() {
     $("#contacts-list").innerHTML = (CONFIG.contacts || []).map((c, i) => {
       const tel = String(c.phone || "").replace(/[^\d+]/g, "");
-      const ini = String(c.name || "?").trim().split(/\s+/).slice(0, 2).map((w) => w.charAt(0).toUpperCase()).join("");
+      const name = tr(c.name), role = tr(c.role);
+      const ini = enOf(c.name || "?").trim().split(/\s+/).slice(0, 2).map((w) => w.charAt(0).toUpperCase()).join("");
       const [bg, fg] = AVATAR_TONES[i % AVATAR_TONES.length];
       return `<li class="contact" data-reveal>
         <span class="avatar" style="--a-bg:${bg};--a-fg:${fg}" aria-hidden="true">${escHtml(ini)}</span>
-        <div class="c-info"><span class="c-name">${escHtml(c.name)}</span>${c.role ? `<span class="c-role">${escHtml(c.role)}</span>` : ""}<span class="c-num">${escHtml(c.phone)}</span></div>
+        <div class="c-info"><span class="c-name">${escHtml(name)}</span>${role ? `<span class="c-role">${escHtml(role)}</span>` : ""}<span class="c-num">${escHtml(c.phone)}</span></div>
         <div class="c-actions">
-          <a class="icon-btn chat" href="https://wa.me/${tel.replace(/\D/g, "")}" target="_blank" rel="noopener" aria-label="WhatsApp ${escHtml(c.name)}"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg></a>
-          <a class="icon-btn call" href="tel:${escHtml(tel)}" aria-label="Call ${escHtml(c.name)}"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></a>
+          <a class="icon-btn chat" href="https://wa.me/${tel.replace(/\D/g, "")}" target="_blank" rel="noopener" aria-label="${escHtml(T("wa_contact", { name }))}"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg></a>
+          <a class="icon-btn call" href="tel:${escHtml(tel)}" aria-label="${escHtml(T("call", { name }))}"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></a>
         </div>
       </li>`;
     }).join("");
@@ -1028,12 +1260,12 @@ const CONFIG = {
       li.classList.remove("is-past", "is-next", "is-live");
       let label = "", liveText = "";
       if (t >= ev.endMs) {
-        li.classList.add("is-past"); label = "Completed"; liveText = "Thank you for joining us";
+        li.classList.add("is-past"); label = T("completed"); liveText = T("thanks_join");
         if (!wasPast) { li.classList.remove("open"); li.querySelector(".ev-toggle").setAttribute("aria-expanded", "false"); }
       } else if (!nextFound) {
         nextFound = true; li.classList.add("is-next");
-        if (t >= ev.startMs) { li.classList.add("is-live"); label = "Happening now"; liveText = `Until ${fmtTime(ev.endMs)}`; }
-        else { label = "Up next"; liveText = `Starts in ${fmtUntil(ev.startMs - t)}`; }
+        if (t >= ev.startMs) { li.classList.add("is-live"); label = T("happening"); liveText = T("until", { t: fmtTime(ev.endMs) }); }
+        else { label = T("up_next"); liveText = T("starts_in", { t: fmtUntil(ev.startMs - t) }); }
       }
       pill.textContent = label;
       live.querySelector(".ev-live-t").textContent = liveText; live.hidden = !label;
@@ -1052,13 +1284,13 @@ const CONFIG = {
       const h = Math.floor(s / 3600); s -= h * 3600;
       const m = Math.floor(s / 60); s -= m * 60;
       cdNums.d.textContent = d; cdNums.h.textContent = pad(h); cdNums.m.textContent = pad(m); cdNums.s.textContent = pad(s);
-      $("#cd-caption").textContent = `Counting down to the ${first.name}`;
-      $("#cd-grid").setAttribute("aria-label", `${d} days, ${h} hours and ${m} minutes until the ${first.name}`);
+      $("#cd-caption").textContent = T("cd_caption", { name: tr(first.name) });
+      $("#cd-grid").setAttribute("aria-label", T("cd_aria", { d, h, m, name: tr(first.name) }));
     } else {
       $("#countdown").hidden = true;
       const done = $("#cd-done");
       done.hidden = false;
-      done.textContent = t < last.endMs ? "The celebrations have begun!" : "Thank you for celebrating with us.";
+      done.textContent = T(t < last.endMs ? "begun" : "all_done");
     }
     const minute = Math.floor(t / 60000);
     if (minute !== lastMinute) { lastMinute = minute; updateStatuses(); }
@@ -1078,7 +1310,7 @@ const CONFIG = {
     const canvas = document.createElement("canvas");
     canvas.width = canvas.height = size;
     canvas.setAttribute("role", "img");
-    canvas.setAttribute("aria-label", "QR code linking to " + siteUrl);
+    canvas.setAttribute("aria-label", T("qr_aria", { url: siteUrl }));
     const ctx = canvas.getContext("2d");
     ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, size, size);
     drawQR(ctx, quiet * cell, quiet * cell, cell, "#3A0B16");
@@ -1086,7 +1318,7 @@ const CONFIG = {
     frame.innerHTML = ""; frame.appendChild(canvas);
     $("#qr-download").disabled = false;
   }
-  function qrFailed() { $("#qr-frame").innerHTML = '<span class="qr-msg">QR code couldn’t load. Check your connection and refresh.</span>'; }
+  function qrFailed() { $("#qr-frame").innerHTML = `<span class="qr-msg">${escHtml(T("qr_failed"))}</span>`; }
   async function downloadQR() {
     if (!qr) return;
     try { await Promise.all([document.fonts.load('600 92px "Cormorant Garamond"'), document.fonts.load('italic 600 52px "Cormorant Garamond"'), document.fonts.load('500 34px Jost')]); } catch (e) {}
@@ -1098,19 +1330,19 @@ const CONFIG = {
     ctx.strokeStyle = "#C9A25B"; ctx.lineWidth = 6; ctx.strokeRect(40, 40, W - 80, H - 80);
     ctx.lineWidth = 2; ctx.strokeRect(58, 58, W - 116, H - 116);
     ctx.textAlign = "center"; ctx.textBaseline = "alphabetic";
-    const serif = '"Cormorant Garamond", Georgia, serif', sans = 'Jost, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
-    ctx.fillStyle = "#6E1423"; ctx.font = "600 96px " + serif; ctx.fillText(coupleName, W / 2, 210);
+    const serif = '"Cormorant Garamond", "Noto Serif Devanagari", "Noto Serif Bengali", Georgia, serif', sans = 'Jost, Hind, "Hind Siliguri", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
+    ctx.fillStyle = "#6E1423"; ctx.font = "600 96px " + serif; ctx.fillText(couple(), W / 2, 210);
     ctx.fillStyle = "#594739"; ctx.font = "500 34px " + sans;
-    ctx.fillText([dateRange, CONFIG.city].filter(Boolean).join("   ·   ").toUpperCase(), W / 2, 276);
+    ctx.fillText([dateRange(), tr(CONFIG.city)].filter(Boolean).join("   ·   ").toUpperCase(), W / 2, 276);
     const qx = (W - qrSize) / 2, qy = 340;
     ctx.fillStyle = "#fff"; ctx.fillRect(qx, qy, qrSize, qrSize);
     drawQR(ctx, qx + quiet * cell, qy + quiet * cell, cell, "#3A0B16");
     ctx.fillStyle = "#22160F"; ctx.font = "500 42px " + sans;
-    ctx.fillText("Scan for the schedule, venues & calendar invites", W / 2, qy + qrSize + 86);
+    ctx.fillText(T("qr_scan"), W / 2, qy + qrSize + 86);
     ctx.fillStyle = "#75604F"; ctx.font = "400 32px " + sans;
     ctx.fillText(siteUrl.replace(/^https?:\/\//, "").replace(/\/$/, ""), W / 2, qy + qrSize + 140);
     if (CONFIG.hashtag) { ctx.fillStyle = "#7D5713"; ctx.font = "italic 600 54px " + serif; ctx.fillText(CONFIG.hashtag, W / 2, qy + qrSize + 222); }
-    c.toBlob((blob) => { if (blob) { downloadBlob(blob, coupleSlug + "-wedding-qr.png"); toast("QR code saved as a PNG, ready to print."); } }, "image/png");
+    c.toBlob((blob) => { if (blob) { downloadBlob(blob, coupleSlug + "-wedding-qr.png"); toast(T("qr_saved")); } }, "image/png");
   }
   function loadQRLib() {
     const s = document.createElement("script");
@@ -1140,11 +1372,6 @@ const CONFIG = {
   const SVGNS = "http://www.w3.org/2000/svg";
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let threadPaths = [], knotY = Infinity;
-  const knotIndex = (() => {
-    if (events.length < 2) return -1;
-    const k = events.findIndex((e) => motifFor(e) === "wedding");
-    return k >= 1 ? k : Math.max(1, events.length - 2);
-  })();
 
   function svgEl(tag, attrs, parent) {
     const el = document.createElementNS(SVGNS, tag);
@@ -1203,7 +1430,7 @@ const CONFIG = {
       svgEl("path", { class: "red", d: "M0 0C7-16 27-17 27 0S7 16 0 0" }, inner);
       svgEl("circle", { class: "knot-bead", cx: 0, cy: 0, r: 5 }, inner);
       const wp = istParts(events[k].startMs);
-      svgEl("text", { class: "knot-cap", x: 0, y: -26 }, inner).textContent = `${wp.d} ${MONTHS[wp.m - 1].slice(0, 3)} · the knot is tied`;
+      svgEl("text", { class: "knot-cap", x: 0, y: -26 }, inner).textContent = T("knot", { date: `${wp.d} ${monthShort(wp.m - 1)}` });
     }
     threadPaths = paths.map((el) => {
       const len = el.getTotalLength(), table = [];
@@ -1229,9 +1456,6 @@ const CONFIG = {
   }
 
   function setupThreads() {
-    $("#tn-l").textContent = CONFIG.couple[0] || "";
-    $("#tn-r").textContent = CONFIG.couple[1] || "";
-    if (knotIndex > 0) $("#events").children[knotIndex].classList.add("knot-next");
     let raf = 0;
     const schedule = (fn) => { cancelAnimationFrame(raf); raf = requestAnimationFrame(fn); };
     window.addEventListener("scroll", () => schedule(updateThreads), { passive: true });
@@ -1280,23 +1504,81 @@ const CONFIG = {
     }
   });
   $("#qr-download").addEventListener("click", downloadQR);
-  $("#copy-link").addEventListener("click", async () => toast((await copyText(siteUrl)) ? "Link copied. Paste it anywhere to share." : "Couldn’t copy. Long-press the address bar instead."));
+  $("#copy-link").addEventListener("click", async () => toast(T((await copyText(pageUrl())) ? "link_copied" : "copy_failed")));
   const tagBtn = $("#hashtag-btn");
-  if (tagBtn) tagBtn.addEventListener("click", async () => toast((await copyText(CONFIG.hashtag)) ? `${CONFIG.hashtag} copied. Tag your photos with it!` : "Couldn’t copy the hashtag."));
+  if (tagBtn) tagBtn.addEventListener("click", async () => toast((await copyText(CONFIG.hashtag)) ? T("tag_copied", { tag: CONFIG.hashtag }) : T("tag_failed")));
+
+  /* ---------- language switching ---------- */
+  const FONT_CSS = {
+    hi: "https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600&family=Noto+Serif+Devanagari:wght@500;600&display=swap",
+    bn: "https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&family=Noto+Serif+Bengali:wght@500;600&display=swap"
+  };
+  const FONT_PROBE = { hi: ['600 40px "Noto Serif Devanagari"', "अ"], bn: ['600 40px "Noto Serif Bengali"', "অ"] };
+  const fontsLoaded = {};
+  function ensureFonts(lang) {
+    if (!FONT_CSS[lang] || fontsLoaded[lang]) return;
+    fontsLoaded[lang] = true;
+    const link = document.createElement("link");
+    link.rel = "stylesheet"; link.href = FONT_CSS[lang];
+    link.onload = () => {
+      const [font, sample] = FONT_PROBE[lang];
+      Promise.all([document.fonts.load(font, sample), document.fonts.load('500 16px "' + (lang === "hi" ? "Hind" : "Hind Siliguri") + '"', sample)])
+        .catch(() => {}).then(() => { fitNames(); drawThreads(); });
+    };
+    document.head.appendChild(link);
+  }
+
+  function applyStatic() {
+    document.querySelectorAll("[data-i18n]").forEach((el) => { el.textContent = T(el.dataset.i18n); });
+    document.querySelectorAll("[data-i18n-aria]").forEach((el) => el.setAttribute("aria-label", T(el.dataset.i18nAria)));
+    document.querySelectorAll(".lang-switch button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === LANG)));
+  }
+
+  let langReady = false;
+  function setLang(lang, save) {
+    LANG = LANGS.includes(lang) ? lang : "en";
+    document.documentElement.lang = LANG;
+    ensureFonts(LANG);
+    applyStatic();
+    renderHeader();
+    renderEvents();
+    renderLinks();
+    renderContacts();
+    if (langReady) document.querySelectorAll("#events [data-reveal], #contacts-list [data-reveal]").forEach((el) => el.classList.add("in"));
+    lastMinute = -1;
+    tick();
+    if (qr) { const cv = $("#qr-frame canvas"); if (cv) cv.setAttribute("aria-label", T("qr_aria", { url: siteUrl })); }
+    if (langReady) drawThreads();
+    if (save) {
+      try { localStorage.setItem("wedding-lang", LANG); } catch (e) {}
+      try {
+        const u = new URL(location.href);
+        if (LANG === "en") u.searchParams.delete("lang"); else u.searchParams.set("lang", LANG);
+        history.replaceState(null, "", u.pathname + u.search + u.hash);
+      } catch (e) {}
+    }
+  }
+  function initialLang() {
+    const q = new URLSearchParams(location.search).get("lang");
+    if (LANGS.includes(q)) return q;
+    try { const saved = localStorage.getItem("wedding-lang"); if (LANGS.includes(saved)) return saved; } catch (e) {}
+    const pref = (navigator.languages || [navigator.language || ""]).map((l) => String(l).toLowerCase().slice(0, 2));
+    return pref.find((l) => l === "hi" || l === "bn") || "en";
+  }
+  document.querySelectorAll(".lang-switch button").forEach((b) => b.addEventListener("click", () => {
+    if (b.dataset.lang !== LANG) setLang(b.dataset.lang, true);
+  }));
 
   renderDeity();
-  renderHeader();
-  renderEvents();
-  renderLinks();
-  renderContacts();
-  tick();
+  setLang(initialLang(), false);
   setInterval(tick, 1000);
   setupObservers();
   setupThreads();
+  langReady = true;
   loadQRLib();
 
   // exposed for testing in the browser console
-  window.__wedding = { buildICS: (all) => buildICS(all ? events : [events[0]]), events, openCalendar };
+  window.__wedding = { buildICS: (all) => buildICS(all ? events : [events[0]]), events, openCalendar, setLang, lang: () => LANG };
 })();
 </script>
 </body>
