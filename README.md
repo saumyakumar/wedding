@@ -31,7 +31,7 @@ If a language is missing, English is shown. The page's own wording (buttons, hea
 | `couple` | `[{ "en": "Sushmit", … }, { "en": "Manaswita", … }]` | Exactly two first names, in display order. The first gets the gold thread, the second the red thread. |
 | `blessing` | `"॥ श्री गणेशाय नमः ॥"` | The line above the names. `""` hides it. |
 | `hashtag` | `"#SushmitWedsManaswita"` | `""` hides it. |
-| `city` | `{ "en": "Jamshedpur & Agartala", … }` | Shown under the dates. |
+| `city` | `{ "en": "Jamshedpur, Jharkhand", … }` | Shown under the dates. |
 | `welcome` | `""` | Optional line under the arch. |
 | `siteUrl` | `"https://saumyakumar.github.io/wedding/"` | **The live link.** Used for the QR code, sharing and calendar entries. |
 | `photoAlbumUrl` | `"https://photos.app.goo.gl/…"` | Google Photos → Share → Create link. |

@@ -15,17 +15,17 @@
   "blessing": "॥ श्री गणेशाय नमः ॥",
   "hashtag": "#SushmitWedsManaswita",
   "city": {
-    "en": "Jamshedpur & Agartala",
-    "hi": "जमशेदपुर और अगरतला",
-    "bn": "জামশেদপুর ও আগরতলা"
+    "en": "Jamshedpur, Jharkhand",
+    "hi": "जमशेदपुर, झारखंड",
+    "bn": "জামশেদপুর, ঝাড়খণ্ড"
   },
   "welcome": "",
   "siteUrl": "https://saumyakumar.github.io/wedding/",
   "photoAlbumUrl": "https://photos.app.goo.gl/REPLACE-WITH-YOUR-ALBUM-LINK",
   "shareMessage": {
-    "en": "You're invited! 💐 Sushmit & Manaswita's wedding celebrations, 14–21 February 2027 in Jamshedpur & Agartala. Schedule, venues, dress codes and calendar invites: {url}",
-    "hi": "आप सादर आमंत्रित हैं! 💐 सुश्मित & मनस्विता का विवाह समारोह, 14–21 फ़रवरी 2027, जमशेदपुर और अगरतला। कार्यक्रम, स्थान, पहनावा और कैलेंडर: {url}",
-    "bn": "আপনাকে সাদর আমন্ত্রণ! 💐 সুস্মিত & মনস্বিতার বিবাহ অনুষ্ঠান, 14–21 ফেব্রুয়ারি 2027, জামশেদপুর ও আগরতলা। অনুষ্ঠানসূচি, স্থান, পোশাক ও ক্যালেন্ডার: {url}"
+    "en": "You're invited! 💐 Sushmit & Manaswita's wedding celebrations, 14–16 February 2027 in Jamshedpur. Schedule, venues, dress codes and calendar invites: {url}",
+    "hi": "आप सादर आमंत्रित हैं! 💐 सुश्मित & मनस्विता का विवाह समारोह, 14–16 फ़रवरी 2027, जमशेदपुर। कार्यक्रम, स्थान, पहनावा और कैलेंडर: {url}",
+    "bn": "আপনাকে সাদর আমন্ত্রণ! 💐 সুস্মিত & মনস্বিতার বিবাহ অনুষ্ঠান, 14–16 ফেব্রুয়ারি 2027, জামশেদপুর। অনুষ্ঠানসূচি, স্থান, পোশাক ও ক্যালেন্ডার: {url}"
   },
   "parents": [
     {
@@ -225,42 +225,6 @@
         "#A51C30",
         "#E07B39",
         "#D4AF37"
-      ]
-    },
-    {
-      "name": {
-        "en": "Reception",
-        "hi": "रिसेप्शन",
-        "bn": "রিসেপশন"
-      },
-      "date": "2027-02-21",
-      "start": "19:00",
-      "venue": {
-        "en": "The Parkline Hotel",
-        "hi": "द पार्कलाइन होटल",
-        "bn": "দ্য পার্কলাইন হোটেল"
-      },
-      "address": {
-        "en": "Agartala, Tripura",
-        "hi": "अगरतला, त्रिपुरा",
-        "bn": "আগরতলা, ত্রিপুরা"
-      },
-      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=23.8341933%2C91.2777088",
-      "dressCode": {
-        "en": "Evening formal — suits, gowns or your finest saree",
-        "hi": "शाम का औपचारिक पहनावा — सूट, गाउन या आपकी सबसे सुंदर साड़ी",
-        "bn": "সন্ধ্যার আনুষ্ঠানিক পোশাক — স্যুট, গাউন বা আপনার সেরা শাড়ি"
-      },
-      "note": {
-        "en": "Dinner, toasts and dancing. Ask us if you need a drop to the station or airport the next day.",
-        "hi": "डिनर, शुभकामनाएँ और नाच-गाना। अगले दिन स्टेशन या एयरपोर्ट छोड़ने की ज़रूरत हो तो हमें बताएँ।",
-        "bn": "নৈশভোজ, শুভেচ্ছা আর নাচ-গান। পরদিন স্টেশন বা বিমানবন্দরে পৌঁছনোর দরকার হলে আমাদের জানান।"
-      },
-      "accent": "#2F4A7A",
-      "palette": [
-        "#1F2A44",
-        "#2F4A7A",
-        "#C0C0C8"
       ]
     }
   ]
