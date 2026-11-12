@@ -80,7 +80,32 @@
       radial-gradient(circle at 50% 28px, #F5B21C 4.5px, transparent 5.5px) 28px 0 / 56px 38px repeat-x;
     filter: drop-shadow(0 3px 4px rgba(0,0,0,.35)); }
   .hero-inner { position: relative; max-width: 720px; margin: 0 auto; padding: 18px 16px 0; }
-  .arch { position: relative; width: min(100%, 340px); margin: 14px auto 0; padding: 96px 20px 40px; }
+  .arch { position: relative; width: min(100%, 340px); margin: 14px auto 0; padding: 58px 20px 40px; }
+  /* Ganesha: gold line art with halo, sunburst and glow */
+  .deity { position: relative; width: 214px; height: 226px; margin: 0 auto 10px; animation: deity-in 1.6s var(--ease) both; }
+  .deity-glow { position: absolute; left: 50%; top: 46%; width: 460px; height: 460px; transform: translate(-50%, -50%); pointer-events: none;
+    background: radial-gradient(circle, rgba(255,214,140,.42) 0%, rgba(240,162,2,.16) 30%, rgba(240,162,2,.05) 48%, transparent 64%);
+    animation: breathe 7s ease-in-out infinite; }
+  .rays { position: absolute; left: 50%; top: 46%; width: 480px; height: 480px; margin: -240px 0 0 -240px; overflow: visible; pointer-events: none;
+    -webkit-mask-image: radial-gradient(circle, transparent 20%, #000 27%, rgba(0,0,0,.6) 45%, transparent 70%);
+    mask-image: radial-gradient(circle, transparent 20%, #000 27%, rgba(0,0,0,.6) 45%, transparent 70%);
+    animation: spin 200s linear infinite; }
+  .rays line { stroke: #F6D79A; stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .rays line:nth-child(odd) { stroke-opacity: .5; }
+  .rays line:nth-child(even) { stroke-opacity: .22; }
+  .ganesha { position: relative; width: 100%; height: 100%; overflow: visible;
+    filter: drop-shadow(0 0 1px rgba(255,226,160,.9)) drop-shadow(0 0 14px rgba(246,180,70,.55)); }
+  .ganesha .ln { fill: none; stroke: url(#g-gold); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .ganesha .ln.fine { stroke-width: 1.1; }
+  .ganesha .fl { fill: url(#g-gold); }
+  .ganesha .tint { fill: url(#g-gold); fill-opacity: .1; }
+  .ganesha .beads { fill: none; stroke: url(#g-gold); stroke-width: 3.4; stroke-linecap: round; stroke-dasharray: 0 7; }
+  .ganesha .halo { fill: none; stroke: #F6D79A; stroke-opacity: .55; stroke-width: 1; }
+  .ganesha .halo.dots { stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 0 8; stroke-opacity: .7; }
+  .ganesha .petal { fill: url(#g-gold); fill-opacity: .55; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes breathe { 50% { opacity: .72; } }
+  @keyframes deity-in { from { opacity: 0; transform: translateY(10px) scale(.96); } }
   .arch-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible;
     -webkit-mask-image: linear-gradient(#000 62%, transparent); mask-image: linear-gradient(#000 62%, transparent); }
   .arch-svg path { fill: none; stroke: var(--gold-2); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
@@ -322,7 +347,8 @@
   @media (min-width: 760px) {
     body { font-size: 18px; }
     .hero { padding-bottom: 72px; }
-    .arch { width: 400px; padding: 112px 28px 48px; }
+    .arch { width: 400px; padding: 70px 28px 48px; }
+    .deity { width: 250px; height: 264px; }
     .ev-head { padding: 28px 28px 22px; grid-template-columns: 64px 1fr auto; gap: 20px; }
     .ev + .ev::before { left: 59px; }
     .ev-body { padding: 0 28px; }
@@ -369,6 +395,55 @@
         <path class="arch-inner" d="M12 440V154c0-50 36-80 87-96 28-9 44-21 51-38 7 17 23 29 51 38 51 16 87 46 87 96v286"/>
       </svg>
       <svg class="finial" viewBox="0 0 16 22" aria-hidden="true"><path d="M8 0c2.6 3.4 4.4 6.2 4.4 8.6a4.4 4.4 0 0 1-8.8 0C3.6 6.2 5.4 3.4 8 0z"/><circle cx="8" cy="18.5" r="2.2"/></svg>
+      <div class="deity" aria-hidden="true">
+        <div class="deity-glow"></div>
+        <svg class="rays" viewBox="-240 -240 480 480" id="rays"></svg>
+        <svg class="ganesha" viewBox="0 0 200 212">
+          <defs>
+            <linearGradient id="g-gold" x1="0" y1="0" x2="0" y2="212" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#FFF1C9"/><stop offset=".35" stop-color="#F2C873"/><stop offset=".7" stop-color="#E0A743"/><stop offset="1" stop-color="#F6D48A"/>
+            </linearGradient>
+          </defs>
+          <!-- halo (prabhamandal) -->
+          <circle class="halo" cx="100" cy="104" r="97"/>
+          <circle class="halo dots" cx="100" cy="104" r="103"/>
+          <g id="petals"></g>
+          <!-- mukut (crown) -->
+          <path class="tint" d="M70 74C70 52 84 38 100 22c16 16 30 30 30 52z"/>
+          <path class="fl" d="M100 3c3.2 5.2 5.4 8.6 5.4 11.6a5.4 5.4 0 0 1-10.8 0c0-3 2.2-6.4 5.4-11.6z"/>
+          <path class="ln" d="M70 74C70 52 84 38 100 22c16 16 30 30 30 52"/>
+          <path class="ln fine" d="M76 61c10-6 38-6 48 0M84 47c8-4.5 24-4.5 32 0M92 34c4-2 12-2 16 0"/>
+          <path class="ln fine" d="M100 50c4 4.5 6 7.5 6 10a6 6 0 0 1-12 0c0-2.5 2-5.5 6-10z"/>
+          <path class="tint" d="M63 74c18-7 56-7 74 0l-2 10c-17-6-53-6-70 0z"/>
+          <path class="ln" d="M63 74c18-7 56-7 74 0l-2 10c-17-6-53-6-70 0z"/>
+          <g class="fl"><circle cx="76" cy="78" r="1.7"/><circle cx="88" cy="76.3" r="1.7"/><circle cx="100" cy="75.8" r="2.2"/><circle cx="112" cy="76.3" r="1.7"/><circle cx="124" cy="78" r="1.7"/></g>
+          <path class="ln fine" d="M63 74c-6-3-9-10-6-16 3 3 5 5 9 6M137 74c6-3 9-10 6-16-3 3-5 5-9 6"/>
+          <!-- ears -->
+          <path class="tint" d="M67 90C51 76 26 78 18 98c-8 20 0 44 18 54 12 6 24 2 33-18zM133 90c16-14 41-12 49 8 8 20 0 44-18 54-12 6-24 2-33-18z"/>
+          <path class="ln" d="M67 90C51 76 26 78 18 98c-8 20 0 44 18 54 12 6 24 2 33-18M133 90c16-14 41-12 49 8 8 20 0 44-18 54-12 6-24 2-33-18"/>
+          <path class="ln fine" d="M64 100c-14-8-30-4-34 10-3 14 6 28 20 32 8 2 14-2 17-9M136 100c14-8 30-4 34 10 3 14-6 28-20 32-8 2-14-2-17-9"/>
+          <path class="ln fine" d="M38 112c5-4 13-3 17 3M162 112c-5-4-13-3-17 3M40 126c5 2 9 6 10 11M160 126c-5 2-9 6-10 11"/>
+          <!-- face -->
+          <path class="ln" d="M67 84c-4 12-4 24 2 36 4 9 12 13 21 12M133 84c4 12 4 24-2 36-4 9-12 13-21 12"/>
+          <path class="ln fine" d="M94 86c1 8 11 8 12 0"/>
+          <circle class="fl" cx="100" cy="92.5" r="2.4"/>
+          <path class="ln fine" d="M79 98q8-5 16 0M105 98q8-5 16 0"/>
+          <path class="ln" d="M81 105q7-5 14 0-7 4.5-14 0zM105 105q7-5 14 0-7 4.5-14 0z"/>
+          <g class="fl"><circle cx="88" cy="105" r="1.7"/><circle cx="112" cy="105" r="1.7"/></g>
+          <!-- tusks -->
+          <path class="tint" d="M90 133c-7 6-11 14-11 25 6-6 11-12 14-17z"/>
+          <path class="ln" d="M90 133c-7 6-11 14-11 25 6-6 11-12 14-17M110 133c3 2.5 5 5 5.5 8"/>
+          <!-- trunk, curling to the right -->
+          <path class="tint" d="M92 112c-2 18-3 38 0 54 4 18 18 28 34 26 16-2 24-16 18-26-5-8-16-8-19 0-2 6 3 11 8 9-8 4-16 1-20-6-4-8-5-20-5-30 0-10 0-20-1-27z"/>
+          <path class="ln" d="M92 112c-2 18-3 38 0 54 4 18 18 28 34 26 16-2 24-16 18-26-5-8-16-8-19 0-2 6 3 11 8 9"/>
+          <path class="ln" d="M108 112c1 9 1 19 1 29 0 10 1 20 5 28 3 6 9 9 16 8"/>
+          <path class="ln fine" d="M92 126q8 4 16 0M91.5 140q8.5 4 17.5 0M92 154q9 4 18-1M95 167q8 3 16-3"/>
+          <!-- mala (necklace) -->
+          <path class="beads" d="M46 150c14 44 94 50 110 4"/>
+          <path class="ln fine" d="M54 160c18 30 76 34 94 2"/>
+          <path class="fl" d="M100 196c3 4 5 7 5 9.5a5 5 0 0 1-10 0c0-2.5 2-5.5 5-9.5z"/>
+        </svg>
+      </div>
       <div class="arch-content">
         <p class="blessing" id="blessing" lang="hi"></p>
         <p class="overline">Together with their families</p>
@@ -514,7 +589,7 @@
    ===================================================================== */
 const CONFIG = {
   couple: ["Aanya", "Vihaan"],                       // TODO: the couple's names (shown in this order)
-  blessing: "॥ शुभ विवाह ॥",                          // TODO: line above the names (e.g. "॥ श्री गणेशाय नमः ॥"), or "" to hide
+  blessing: "॥ श्री गणेशाय नमः ॥",                    // TODO: line above the names (e.g. "॥ शुभ विवाह ॥"), or "" to hide
   hashtag: "#AanyaWedsVihaan",                       // TODO: your wedding hashtag
   city: "Jaipur, Rajasthan",                         // TODO: city shown under the dates
   welcome: "",                                       // Optional: a short welcome line under the arch ("" hides it)
@@ -803,6 +878,26 @@ const CONFIG = {
   }
 
   /* ---------- render ---------- */
+  function renderDeity() {
+    const NS = "http://www.w3.org/2000/svg";
+    const rays = document.getElementById("rays");
+    if (rays) for (let i = 0; i < 96; i++) {
+      const a = (i / 96) * Math.PI * 2, long = i % 2 === 0, r1 = 112, r2 = long ? 238 : 178;
+      const l = document.createElementNS(NS, "line");
+      l.setAttribute("x1", (Math.cos(a) * r1).toFixed(1)); l.setAttribute("y1", (Math.sin(a) * r1).toFixed(1));
+      l.setAttribute("x2", (Math.cos(a) * r2).toFixed(1)); l.setAttribute("y2", (Math.sin(a) * r2).toFixed(1));
+      rays.appendChild(l);
+    }
+    const petals = document.getElementById("petals");
+    if (petals) for (let i = 0; i < 36; i++) {
+      const e = document.createElementNS(NS, "ellipse");
+      e.setAttribute("class", "petal"); e.setAttribute("cx", "100"); e.setAttribute("cy", "-1.5");
+      e.setAttribute("rx", "2.4"); e.setAttribute("ry", "5.5");
+      e.setAttribute("transform", `rotate(${i * 10} 100 104)`);
+      petals.appendChild(e);
+    }
+  }
+
   function renderHeader() {
     const [a, b] = CONFIG.couple.map(escHtml);
     $("#names").innerHTML = `${a}<span class="amp" aria-hidden="true">&amp;</span><span class="sr-only"> and </span>${b}`;
@@ -1047,6 +1142,7 @@ const CONFIG = {
   const tagBtn = $("#hashtag-btn");
   if (tagBtn) tagBtn.addEventListener("click", async () => toast((await copyText(CONFIG.hashtag)) ? `${CONFIG.hashtag} copied. Tag your photos with it!` : "Couldn’t copy the hashtag."));
 
+  renderDeity();
   renderHeader();
   renderEvents();
   renderLinks();
