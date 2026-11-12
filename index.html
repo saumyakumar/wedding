@@ -182,7 +182,24 @@
   /* ============ Event cards ============ */
   .timeline { display: grid; gap: 24px; margin: 0; padding: 0; list-style: none; }
   .ev { position: relative; scroll-margin-top: 76px; }
-  .ev + .ev::before { content: ""; position: absolute; left: 47px; top: -24px; height: 24px; border-left: 2px dotted var(--gold); opacity: .8; }
+  /* Gathbandhan: two threads (gold = groom, red = bride) that tie a knot at the wedding */
+  .thread-wrap { --g: 14px; position: relative; padding: 0 var(--g); }
+  .thread-wrap .timeline { position: relative; z-index: 1; gap: 46px; }
+  .thread-names { display: flex; justify-content: space-between; align-items: center; margin: 0 calc(-1 * var(--g)) 22px;
+    font-family: var(--serif); font-style: italic; font-size: 20px; font-weight: 500; color: var(--ink-2); }
+  .tn { display: inline-flex; align-items: center; gap: 9px; }
+  .tn i { width: 11px; height: 11px; border-radius: 50%; background: var(--t); box-shadow: 0 0 0 4px var(--t-soft); }
+  .tn-l i { margin-left: calc(var(--g) / 2 - 5.5px); }
+  .tn-r i { margin-right: calc(var(--g) / 2 - 5.5px); }
+  .threads { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 0; }
+  .threads path { fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .threads .gold { stroke: #B8862F; }
+  .threads .red { stroke: #A51C30; }
+  .threads .knot-in { opacity: 0; transform: scale(.4); transform-box: fill-box; transform-origin: center; transition: opacity .5s var(--ease), transform .7s cubic-bezier(.3,1.5,.5,1); }
+  .threads.knot-on .knot-in { opacity: 1; transform: none; }
+  .threads .knot-bead { fill: #E3A008; stroke: #8A5F17; stroke-width: 1; }
+  .threads .knot-cap { font-family: var(--serif); font-style: italic; font-size: 17px; font-weight: 600; fill: var(--maroon); text-anchor: middle; }
+  .ev.knot-next { margin-top: 104px; }
   .card { position: relative; overflow: hidden; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow); transition: box-shadow .35s var(--ease), background-color .35s; }
   .card::before { content: ""; position: absolute; inset: 0 0 auto; height: 4px; background: var(--c); z-index: 1; }
   .ev-head { position: relative; display: grid; grid-template-columns: 58px 1fr auto; align-items: center; gap: 15px; padding: 24px 18px 20px;
@@ -353,7 +370,7 @@
     .arch { width: 440px; padding: 70px 30px 48px; }
     .deity { width: 250px; height: 264px; }
     .ev-head { padding: 28px 28px 22px; grid-template-columns: 64px 1fr auto; gap: 20px; }
-    .ev + .ev::before { left: 59px; }
+    .thread-wrap { --g: 34px; }
     .ev-body { padding: 0 28px; }
     .ev-actions { margin: 0 -28px; }
     .fact { grid-template-columns: 90px 1fr; }
@@ -496,7 +513,14 @@
         <h2 id="schedule-h">The Celebrations</h2>
         <p class="sec-sub">All times are India Standard Time. Add a function to your calendar and you’ll get a reminder a day before and two hours before.</p>
       </header>
-      <ol class="timeline" id="events"></ol>
+      <div class="thread-wrap" id="thread-wrap">
+        <div class="thread-names" aria-hidden="true">
+          <span class="tn tn-l" style="--t:#B8862F;--t-soft:rgba(184,134,47,.18)"><i></i><span id="tn-l"></span></span>
+          <span class="tn tn-r" style="--t:#A51C30;--t-soft:rgba(165,28,48,.15)"><span id="tn-r"></span><i></i></span>
+        </div>
+        <svg class="threads" id="threads" aria-hidden="true" focusable="false"></svg>
+        <ol class="timeline" id="events"></ol>
+      </div>
       <div class="save-banner" data-reveal>
         <h3>Never miss a moment</h3>
         <p id="save-banner-text">Save every function to your calendar in one tap, reminders included.</p>
@@ -1112,6 +1136,111 @@ const CONFIG = {
     }
   }
 
+  /* ---------- gathbandhan threads ---------- */
+  const SVGNS = "http://www.w3.org/2000/svg";
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let threadPaths = [], knotY = Infinity;
+  const knotIndex = (() => {
+    if (events.length < 2) return -1;
+    const k = events.findIndex((e) => motifFor(e) === "wedding");
+    return k >= 1 ? k : Math.max(1, events.length - 2);
+  })();
+
+  function svgEl(tag, attrs, parent) {
+    const el = document.createElementNS(SVGNS, tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(el);
+    return el;
+  }
+
+  function drawThreads() {
+    const wrap = $("#thread-wrap"), svg = $("#threads"), ol = $("#events");
+    if (!wrap || !ol.children.length) return;
+    const W = wrap.clientWidth, H = wrap.clientHeight, cx = W / 2;
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    svg.innerHTML = "";
+    const wr = wrap.getBoundingClientRect();
+    const dotPos = (d) => { const r = d.getBoundingClientRect(); return [r.left + r.width / 2 - wr.left, r.top + r.height / 2 - wr.top]; };
+    const dots = wrap.querySelectorAll(".tn i");
+    const [xL, y0] = dotPos(dots[0]), [xR] = dotPos(dots[1]);
+    const cards = [...ol.children].map((li) => ({ t: ol.offsetTop + li.offsetTop, b: ol.offsetTop + li.offsetTop + li.offsetHeight }));
+    const k = knotIndex, n = k > 0 ? k : cards.length;
+    knotY = k > 0 ? cards[k - 1].b + (cards[k].t - cards[k - 1].b) * 0.5 : Infinity;
+    const r = (v) => v.toFixed(1);
+
+    // One side thread: straight down beside each card, swinging inward a little more in every gap
+    function side(x0, dir) {
+      let d = `M${r(x0)} ${r(y0)} L${r(x0)} ${r(cards[0].t)}`;
+      for (let i = 0; i < n; i++) {
+        const c = cards[i];
+        d += ` L${r(x0)} ${r(c.b)}`;
+        if (k > 0 && i === k - 1) {
+          const ex = cx - dir * 27;
+          d += ` C${r(x0)} ${r(c.b + (knotY - c.b) * 0.7)} ${r(ex - dir * 46)} ${r(knotY)} ${r(ex)} ${r(knotY)}`;
+        } else if (i < n - 1) {
+          const nt = cards[i + 1].t, gh = nt - c.b, gy = c.b + gh / 2;
+          const ix = x0 + dir * ((i + 1) / n) * (Math.abs(cx - x0) - 34);
+          d += ` C${r(x0)} ${r(c.b + gh * .18)} ${r(ix)} ${r(gy - gh * .32)} ${r(ix)} ${r(gy)}`;
+          d += ` C${r(ix)} ${r(gy + gh * .32)} ${r(x0)} ${r(nt - gh * .18)} ${r(x0)} ${r(nt)}`;
+        }
+      }
+      return d;
+    }
+    // After the knot: one cord of both colours twisted together, down the middle
+    function braid(phase) {
+      const yS = knotY + 6, A = 3.2, P = 18;
+      let d = `M${r(cx)} ${r(yS)}`;
+      for (let y = yS + 3; y <= H; y += 3) d += ` L${r(cx + A * Math.sin((y - yS) / P * Math.PI * 2 + phase))} ${r(y)}`;
+      return d;
+    }
+
+    const paths = [svgEl("path", { class: "gold", d: side(xL, 1) }, svg), svgEl("path", { class: "red", d: side(xR, -1) }, svg)];
+    if (k > 0) {
+      paths.push(svgEl("path", { class: "gold", d: braid(0) }, svg), svgEl("path", { class: "red", d: braid(Math.PI) }, svg));
+      const g = svgEl("g", { transform: `translate(${r(cx)} ${r(knotY)})` }, svg);
+      const inner = svgEl("g", { class: "knot-in" }, g);
+      svgEl("path", { class: "gold", d: "M0 0C-7-16-27-17-27 0S-7 16 0 0" }, inner);
+      svgEl("path", { class: "red", d: "M0 0C7-16 27-17 27 0S7 16 0 0" }, inner);
+      svgEl("circle", { class: "knot-bead", cx: 0, cy: 0, r: 5 }, inner);
+      const wp = istParts(events[k].startMs);
+      svgEl("text", { class: "knot-cap", x: 0, y: -26 }, inner).textContent = `${wp.d} ${MONTHS[wp.m - 1].slice(0, 3)} · the knot is tied`;
+    }
+    threadPaths = paths.map((el) => {
+      const len = el.getTotalLength(), table = [];
+      for (let i = 0; i <= 160; i++) { const l = len * i / 160; table.push([l, el.getPointAtLength(l).y]); }
+      el.style.strokeDasharray = `${len} ${len}`;
+      return { el, len, table };
+    });
+    updateThreads();
+  }
+
+  function updateThreads() {
+    const wrap = $("#thread-wrap"), svg = $("#threads");
+    if (!wrap || !threadPaths.length) return;
+    const drawnY = reduceMotion ? Infinity : window.innerHeight * 0.72 - wrap.getBoundingClientRect().top;
+    threadPaths.forEach((p) => {
+      let lo = 0, hi = p.table.length - 1;
+      if (drawnY >= p.table[hi][1]) lo = hi;
+      else while (lo < hi) { const mid = (lo + hi + 1) >> 1; if (p.table[mid][1] <= drawnY) lo = mid; else hi = mid - 1; }
+      const shown = p.table[lo][1] <= drawnY ? p.table[lo][0] : 0;
+      p.el.style.strokeDashoffset = String(p.len - shown);
+    });
+    svg.classList.toggle("knot-on", drawnY >= knotY);
+  }
+
+  function setupThreads() {
+    $("#tn-l").textContent = CONFIG.couple[0] || "";
+    $("#tn-r").textContent = CONFIG.couple[1] || "";
+    if (knotIndex > 0) $("#events").children[knotIndex].classList.add("knot-next");
+    let raf = 0;
+    const schedule = (fn) => { cancelAnimationFrame(raf); raf = requestAnimationFrame(fn); };
+    window.addEventListener("scroll", () => schedule(updateThreads), { passive: true });
+    if ("ResizeObserver" in window) new ResizeObserver(() => schedule(drawThreads)).observe($("#events"));
+    window.addEventListener("resize", () => schedule(drawThreads));
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawThreads);
+    drawThreads();
+  }
+
   function setupObservers() {
     const revealEls = document.querySelectorAll("[data-reveal]");
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1163,6 +1292,7 @@ const CONFIG = {
   tick();
   setInterval(tick, 1000);
   setupObservers();
+  setupThreads();
   loadQRLib();
 
   // exposed for testing in the browser console
