@@ -7,9 +7,9 @@
 <!-- TODO: the title and the description/og: tags below are what WhatsApp shows in the link preview.
      Link previews don't run JavaScript, so edit these by hand as well as CONFIG. -->
 <title>Sushmit &amp; Manaswita · Wedding Celebrations</title>
-<meta name="description" content="Schedule, venues, dress codes and calendar invites for the wedding celebrations of Sushmit Shekhar &amp; Manaswita Datta, 15–16 February 2027, Jamshedpur.">
+<meta name="description" content="Schedule, venues, dress codes and calendar invites for the wedding celebrations of Sushmit Shekhar &amp; Manaswita Datta, 14–21 February 2027, Jamshedpur &amp; Agartala.">
 <meta property="og:title" content="Sushmit &amp; Manaswita · Wedding Celebrations">
-<meta property="og:description" content="Schedule, venues, dress codes and calendar invites. 15–16 February 2027 · Jamshedpur">
+<meta property="og:description" content="Schedule, venues, dress codes and calendar invites. 14–21 February 2027 · Jamshedpur &amp; Agartala">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://saumyakumar.github.io/wedding/">
 <meta name="theme-color" content="#3A0B16">
@@ -178,6 +178,19 @@
   .eyebrow::before, .eyebrow::after { content: ""; width: 26px; height: 1px; background: currentColor; opacity: .45; }
   .sec-head h2 { font-size: clamp(2.5rem, 10vw, 3.5rem); color: var(--maroon); }
   .sec-sub { margin-top: 12px; color: var(--ink-2); font-size: 16px; }
+
+  /* ============ Families ============ */
+  .families { padding-top: 60px; }
+  .families .sec-head { margin-bottom: 26px; }
+  .fam-grid { display: grid; gap: 10px; align-items: center; }
+  @media (min-width: 560px) { .fam-grid { grid-template-columns: 1fr auto 1fr; gap: 18px; } }
+  .fam { padding: 22px 18px 20px; text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow); }
+  .fam-lbl { margin-bottom: 8px; font-size: 12.5px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-ink); }
+  .fam-names { font-family: var(--serif); font-size: 23px; font-weight: 600; line-height: 1.3; color: var(--maroon); }
+  .fam-names span { display: block; }
+  .fam-heart { text-align: center; font-size: 22px; line-height: 1; color: var(--gold); }
+  html:is([lang="hi"], [lang="bn"]) .fam-lbl { font-size: 14px; }
+  html:is([lang="hi"], [lang="bn"]) .fam-names { font-size: 21px; line-height: 1.45; }
 
   /* ============ Event cards ============ */
   .timeline { display: grid; gap: 24px; margin: 0; padding: 0; list-style: none; }
@@ -534,6 +547,16 @@
 </nav>
 
 <main>
+  <section class="section families" id="families" aria-labelledby="families-h">
+    <div class="container narrow">
+      <header class="sec-head" data-reveal>
+        <p class="eyebrow" data-i18n="fam_eyebrow">With the blessings of</p>
+        <h2 id="families-h" data-i18n="fam_h">Our Families</h2>
+      </header>
+      <div class="fam-grid" id="fam-grid" data-reveal></div>
+    </div>
+  </section>
+
   <section class="section" id="schedule" aria-labelledby="schedule-h">
     <div class="container narrow">
       <header class="sec-head" data-reveal>
@@ -656,15 +679,24 @@ const CONFIG = {
   ],                                                 // Sushmit Shekhar & Manaswita Datta (first names shown on the page)
   blessing: "॥ श्री गणेशाय नमः ॥",                    // Line above the names (same in every language), or "" to hide
   hashtag: "#SushmitWedsManaswita",                  // TODO: confirm the wedding hashtag
-  city: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },
+  city: { en: "Jamshedpur & Agartala", hi: "जमशेदपुर और अगरतला", bn: "জামশেদপুর ও আগরতলা" },
   welcome: "",                                       // Optional: a short welcome line under the arch ("" hides it)
   siteUrl: "https://saumyakumar.github.io/wedding/", // Live page URL, used for the QR code and WhatsApp share. Change only if the page moves.
   photoAlbumUrl: "https://photos.app.goo.gl/REPLACE-WITH-YOUR-ALBUM-LINK", // TODO: Google Photos shared-album link (Share → Create link)
   shareMessage: {                                    // WhatsApp message; {url} becomes the page link
-    en: "You're invited! 💐 Sushmit & Manaswita's wedding celebrations, 15–16 February 2027 in Jamshedpur. Schedule, venues, dress codes and calendar invites: {url}",
-    hi: "आप सादर आमंत्रित हैं! 💐 सुश्मित & मनस्विता का विवाह समारोह, 15–16 फ़रवरी 2027, जमशेदपुर। कार्यक्रम, स्थान, पहनावा और कैलेंडर: {url}",
-    bn: "আপনাকে সাদর আমন্ত্রণ! 💐 সুস্মিত & মনস্বিতার বিবাহ অনুষ্ঠান, 15–16 ফেব্রুয়ারি 2027, জামশেদপুর। অনুষ্ঠানসূচি, স্থান, পোশাক ও ক্যালেন্ডার: {url}"
+    en: "You're invited! 💐 Sushmit & Manaswita's wedding celebrations, 14–21 February 2027 in Jamshedpur & Agartala. Schedule, venues, dress codes and calendar invites: {url}",
+    hi: "आप सादर आमंत्रित हैं! 💐 सुश्मित & मनस्विता का विवाह समारोह, 14–21 फ़रवरी 2027, जमशेदपुर और अगरतला। कार्यक्रम, स्थान, पहनावा और कैलेंडर: {url}",
+    bn: "আপনাকে সাদর আমন্ত্রণ! 💐 সুস্মিত & মনস্বিতার বিবাহ অনুষ্ঠান, 14–21 ফেব্রুয়ারি 2027, জামশেদপুর ও আগরতলা। অনুষ্ঠানসূচি, স্থান, পোশাক ও ক্যালেন্ডার: {url}"
   },
+
+  parents: [                                         // "With the blessings of" block (shown in this order)
+    { label: { en: "Sushmit's parents", hi: "सुश्मित के माता-पिता", bn: "সুস্মিতের বাবা-মা" },
+      names: [ { en: "Chandra Shekhar Prasad", hi: "चंद्र शेखर प्रसाद", bn: "চন্দ্র শেখর প্রসাদ" },
+               { en: "Indira Datta",           hi: "इंदिरा दत्ता",      bn: "ইন্দিরা দত্ত" } ] },
+    { label: { en: "Manaswita's parents", hi: "मनस्विता के माता-पिता", bn: "মনস্বিতার বাবা-মা" },
+      names: [ { en: "Bhaskar Datta",          hi: "भास्कर दत्ता",       bn: "ভাস্কর দত্ত" },
+               { en: "Rama Sutradhar Datta",   hi: "रमा सूत्रधार दत्ता",  bn: "রমা সূত্রধর দত্ত" } ] }
+  ],
 
   contacts: [                                        // Add more as { name, role, phone } — phone with +91
     { name: { en: "Sushmit Shekhar", hi: "सुश्मित शेखर", bn: "সুস্মিত শেখর" },
@@ -672,30 +704,18 @@ const CONFIG = {
       phone: "+91 91996 94008" }
   ],
 
+  // Times: give "start" (24-hour). "end" is optional — leave it out to show "7:00 PM onwards"
+  // (calendar entries then last 4 hours). Add end: "23:00" to show a time range instead.
   // accent  = the function's colour on its card.
   // palette = optional colour dots shown with the dress code ([] hides them).
   events: [
-    { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
-      name: { en: "Haldi", hi: "हल्दी", bn: "গায়ে হলুদ" },
-      date: "2027-02-15", start: "09:30", end: "12:30",
-      venue: { en: "Venue to be announced", hi: "स्थान जल्द बताया जाएगा", bn: "স্থান শীঘ্রই জানানো হবে" },   // TODO: venue name
-      address: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },          // TODO: full address
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Jamshedpur%2C+Jharkhand", // TODO: Google Maps link to the venue
-      dressCode: { en: "Shades of yellow — and clothes you don't mind getting turmeric on",
-                   hi: "पीले रंग के कपड़े — ऐसे, जिन पर हल्दी लगने की फ़िक्र न हो",
-                   bn: "হলুদ রঙের পোশাক — এমন, যাতে হলুদ লাগলেও চিন্তা নেই" },
-      note: { en: "Brunch will be served. Bring a spare outfit if you plan to join the fun.",
-              hi: "ब्रंच की व्यवस्था रहेगी। मस्ती में शामिल होना हो तो एक जोड़ी कपड़े साथ रखें।",
-              bn: "ব্রাঞ্চের ব্যবস্থা থাকবে। মজায় যোগ দিতে চাইলে এক সেট বাড়তি জামা সঙ্গে আনুন।" },
-      accent: "#E3A008", palette: ["#F5C518", "#F9E08B", "#FFFFFF"]
-    },
-    { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
+    {
       name: { en: "Mehendi", hi: "मेहंदी", bn: "মেহেন্দি" },
-      date: "2027-02-15", start: "15:00", end: "18:30",
-      venue: { en: "Venue to be announced", hi: "स्थान जल्द बताया जाएगा", bn: "স্থান শীঘ্রই জানানো হবে" },   // TODO: venue name
-      address: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },          // TODO: full address
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Jamshedpur%2C+Jharkhand", // TODO: Google Maps link to the venue
-      dressCode: { en: "Greens, pinks and festive florals",
+      date: "2027-02-14", start: "19:00",
+      venue: { en: "F Road, Sonari", hi: "एफ़ रोड, सोनारी", bn: "এফ রোড, সোনারি" },
+      address: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },
+      mapsUrl: "https://www.google.com/maps/search/?api=1&query=22.818944%2C86.1621792",
+      dressCode: { en: "Greens, pinks and festive florals",                         // TODO: confirm dress code
                    hi: "हरे, गुलाबी और फूलों वाले रंग-बिरंगे कपड़े",
                    bn: "সবুজ, গোলাপি আর ফুলেল রঙিন সাজ" },
       note: { en: "Henna artists for every guest, chaat counters and folk music.",
@@ -703,41 +723,55 @@ const CONFIG = {
               bn: "প্রত্যেক অতিথির জন্য মেহেন্দি শিল্পী, চাটের স্টল আর লোকসংগীত।" },
       accent: "#4F7A3A", palette: ["#4F7A3A", "#9CC17B", "#E66F9B"]
     },
-    { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
-      name: { en: "Sangeet", hi: "संगीत", bn: "সঙ্গীত" },
-      date: "2027-02-15", start: "20:00", end: "23:30",
-      venue: { en: "Venue to be announced", hi: "स्थान जल्द बताया जाएगा", bn: "স্থান শীঘ্রই জানানো হবে" },   // TODO: venue name
-      address: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },          // TODO: full address
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Jamshedpur%2C+Jharkhand", // TODO: Google Maps link to the venue
-      dressCode: { en: "Glam Indo-western — sequins and shimmer welcome",
+    {
+      name: { en: "Sangeet & Ring Ceremony", hi: "संगीत और सगाई", bn: "সঙ্গীত ও আংটি বদল" },
+      date: "2027-02-15", start: "19:00",
+      venue: { en: "F Road, Sonari", hi: "एफ़ रोड, सोनारी", bn: "এফ রোড, সোনারি" },
+      address: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },
+      mapsUrl: "https://www.google.com/maps/search/?api=1&query=22.818944%2C86.1621792",
+      dressCode: { en: "Glam Indo-western — sequins and shimmer welcome",           // TODO: confirm dress code
                    hi: "ग्लैमरस इंडो-वेस्टर्न — चमक-दमक का स्वागत है",
                    bn: "ঝলমলে ইন্দো-ওয়েস্টার্ন — চুমকি আর চমক স্বাগত" },
-      note: { en: "Family performances begin at 9:00 PM, followed by dinner and dancing.",
-              hi: "रात 9:00 बजे से परिवार की प्रस्तुतियाँ, फिर डिनर और नाच-गाना।",
-              bn: "রাত 9:00টা থেকে পরিবারের পরিবেশনা, তারপর নৈশভোজ আর নাচ-গান।" },
+      note: { en: "The ring ceremony, then family performances, dinner and dancing.",
+              hi: "सगाई की रस्म, फिर परिवार की प्रस्तुतियाँ, डिनर और नाच-गाना।",
+              bn: "আংটি বদল, তারপর পরিবারের পরিবেশনা, নৈশভোজ আর নাচ-গান।" },
       accent: "#B0306A", palette: ["#B0306A", "#2B2B6E", "#D9B45A"]
     },
-    { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
+    {
+      name: { en: "Haldi", hi: "हल्दी", bn: "গায়ে হলুদ" },
+      date: "2027-02-16", start: "10:00",
+      venue: { en: "F Road, Sonari", hi: "एफ़ रोड, सोनारी", bn: "এফ রোড, সোনারি" },
+      address: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },
+      mapsUrl: "https://www.google.com/maps/search/?api=1&query=22.818944%2C86.1621792",
+      dressCode: { en: "Shades of yellow — and clothes you don't mind getting turmeric on",   // TODO: confirm dress code
+                   hi: "पीले रंग के कपड़े — ऐसे, जिन पर हल्दी लगने की फ़िक्र न हो",
+                   bn: "হলুদ রঙের পোশাক — এমন, যাতে হলুদ লাগলেও চিন্তা নেই" },
+      note: { en: "Brunch will be served. Bring a spare outfit if you plan to join the fun.",
+              hi: "ब्रंच की व्यवस्था रहेगी। मस्ती में शामिल होना हो तो एक जोड़ी कपड़े साथ रखें।",
+              bn: "ব্রাঞ্চের ব্যবস্থা থাকবে। মজায় যোগ দিতে চাইলে এক সেট বাড়তি জামা সঙ্গে আনুন।" },
+      accent: "#E3A008", palette: ["#F5C518", "#F9E08B", "#FFFFFF"]
+    },
+    {
       name: { en: "Wedding", hi: "विवाह", bn: "বিয়ে" },
-      date: "2027-02-16", start: "11:00", end: "15:00",
-      venue: { en: "Venue to be announced", hi: "स्थान जल्द बताया जाएगा", bn: "স্থান শীঘ্রই জানানো হবে" },   // TODO: venue name
-      address: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },          // TODO: full address
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Jamshedpur%2C+Jharkhand", // TODO: Google Maps link to the venue
-      dressCode: { en: "Traditional Indian — sarees, lehengas, sherwanis, bandhgalas",
+      date: "2027-02-16", start: "19:00",
+      venue: { en: "Beldih Golf Course", hi: "बेलडीह गोल्फ़ कोर्स", bn: "বেলডি গলফ কোর্স" },
+      address: { en: "Sonari, Jamshedpur, Jharkhand", hi: "सोनारी, जमशेदपुर, झारखंड", bn: "সোনারি, জামশেদপুর, ঝাড়খণ্ড" },
+      mapsUrl: "https://www.google.com/maps/search/?api=1&query=22.8091068%2C86.1737869",
+      dressCode: { en: "Traditional Indian — sarees, lehengas, sherwanis, bandhgalas",        // TODO: confirm dress code
                    hi: "पारंपरिक भारतीय — साड़ी, लहंगा, शेरवानी, बंदगला",
                    bn: "ঐতিহ্যবাহী ভারতীয় — শাড়ি, লেহেঙ্গা, শেরওয়ানি, বন্ধগলা" },
-      note: { en: "The baraat arrives at 11:00 AM; pheras at 12:30 PM. Lunch follows.",
-              hi: "बारात सुबह 11:00 बजे पहुँचेगी; फेरे दोपहर 12:30 बजे। उसके बाद भोजन।",
-              bn: "বরযাত্রী পৌঁছবে সকাল 11:00টায়; সাত পাক দুপুর 12:30-এ। তারপর মধ্যাহ্নভোজ।" },
+      note: { en: "The baraat arrives in the evening, followed by the pheras and dinner.",
+              hi: "शाम को बारात का स्वागत, फिर फेरे और भोजन।",
+              bn: "সন্ধ্যায় বরযাত্রীদের আগমন, তারপর সাত পাক আর নৈশভোজ।" },
       accent: "#A51C30", palette: ["#A51C30", "#E07B39", "#D4AF37"]
     },
-    { // TODO: date/time are placeholders on 15–16 Feb; confirm every field of this event
+    {
       name: { en: "Reception", hi: "रिसेप्शन", bn: "রিসেপশন" },
-      date: "2027-02-16", start: "19:30", end: "23:30",
-      venue: { en: "Venue to be announced", hi: "स्थान जल्द बताया जाएगा", bn: "স্থান শীঘ্রই জানানো হবে" },   // TODO: venue name
-      address: { en: "Jamshedpur, Jharkhand", hi: "जमशेदपुर, झारखंड", bn: "জামশেদপুর, ঝাড়খণ্ড" },          // TODO: full address
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Jamshedpur%2C+Jharkhand", // TODO: Google Maps link to the venue
-      dressCode: { en: "Evening formal — suits, gowns or your finest saree",
+      date: "2027-02-21", start: "19:00",
+      venue: { en: "The Parkline Hotel", hi: "द पार्कलाइन होटल", bn: "দ্য পার্কলাইন হোটেল" },
+      address: { en: "Agartala, Tripura", hi: "अगरतला, त्रिपुरा", bn: "আগরতলা, ত্রিপুরা" },
+      mapsUrl: "https://www.google.com/maps/search/?api=1&query=23.8341933%2C91.2777088",
+      dressCode: { en: "Evening formal — suits, gowns or your finest saree",                  // TODO: confirm dress code
                    hi: "शाम का औपचारिक पहनावा — सूट, गाउन या आपकी सबसे सुंदर साड़ी",
                    bn: "সন্ধ্যার আনুষ্ঠানিক পোশাক — স্যুট, গাউন বা আপনার সেরা শাড়ি" },
       note: { en: "Dinner, toasts and dancing. Ask us if you need a drop to the station or airport the next day.",
@@ -759,6 +793,7 @@ const CONFIG = {
   const TZID = "Asia/Kolkata";
   const IST_OFFSET_MS = 330 * 60000; // UTC+05:30, India has no daylight saving
   const DAY_MS = 86400000;
+  const DEFAULT_HOURS = 4; // calendar length for functions without an end time
 
   const $ = (sel) => document.querySelector(sel);
   const pad = (n) => String(n).padStart(2, "0");
@@ -795,7 +830,8 @@ const CONFIG = {
       add_cal: "Add to calendar", add_cal_aria: "Add {name} to calendar", directions: "Directions", directions_aria: "Directions to {name} at {venue}",
       details_aria: "Show details for {name}",
       up_next: "Up next", happening: "Happening now", completed: "Completed", thanks_join: "Thank you for joining us",
-      starts_in: "Starts in {t}", until: "Until {t}", knot: "{date} · the knot is tied",
+      starts_in: "Starts in {t}", until: "Until {t}", from_time: "{t} onwards", started: "Started at {t}",
+      fam_eyebrow: "With the blessings of", fam_h: "Our Families", knot: "{date} · the knot is tied",
       sheet_one: "Add {name} to your calendar", sheet_all: "Save all {n} events",
       sheet_note_one: "Apple, Outlook and Samsung calendars include reminders 1 day and 2 hours before.",
       sheet_note_all: "Includes reminders 1 day and 2 hours before each event. On Google Calendar? Add events from each card, or import the file at calendar.google.com.",
@@ -833,7 +869,8 @@ const CONFIG = {
       add_cal: "कैलेंडर में जोड़ें", add_cal_aria: "{name} को कैलेंडर में जोड़ें", directions: "रास्ता देखें", directions_aria: "{name} — {venue} का रास्ता",
       details_aria: "{name} का विवरण देखें",
       up_next: "अगला कार्यक्रम", happening: "अभी चल रहा है", completed: "संपन्न", thanks_join: "आने के लिए धन्यवाद",
-      starts_in: "{t} में शुरू", until: "{t} तक", knot: "{date} · बँधा गठबंधन",
+      starts_in: "{t} में शुरू", until: "{t} तक", from_time: "{t} बजे से", started: "{t} बजे शुरू हुआ",
+      fam_eyebrow: "आशीर्वाद सहित", fam_h: "हमारे परिवार", knot: "{date} · बँधा गठबंधन",
       sheet_one: "{name} को कैलेंडर में जोड़ें", sheet_all: "सभी {n} कार्यक्रम जोड़ें",
       sheet_note_one: "Apple, Outlook और Samsung कैलेंडर में 1 दिन और 2 घंटे पहले रिमाइंडर मिलेगा।",
       sheet_note_all: "हर कार्यक्रम से 1 दिन और 2 घंटे पहले रिमाइंडर। Google Calendar इस्तेमाल करते हैं? हर कार्ड से अलग-अलग जोड़ें, या calendar.google.com पर फ़ाइल इम्पोर्ट करें।",
@@ -871,7 +908,8 @@ const CONFIG = {
       add_cal: "ক্যালেন্ডারে রাখুন", add_cal_aria: "{name} ক্যালেন্ডারে রাখুন", directions: "পথনির্দেশ", directions_aria: "{name} — {venue}-এর পথ",
       details_aria: "{name}-এর বিস্তারিত দেখুন",
       up_next: "পরবর্তী", happening: "এখন চলছে", completed: "সম্পন্ন", thanks_join: "আসার জন্য ধন্যবাদ",
-      starts_in: "{t} পরে শুরু", until: "{t} পর্যন্ত", knot: "{date} · গাঁটছড়া বাঁধা",
+      starts_in: "{t} পরে শুরু", until: "{t} পর্যন্ত", from_time: "{t}টা থেকে", started: "{t}টায় শুরু হয়েছে",
+      fam_eyebrow: "আশীর্বাদে", fam_h: "আমাদের পরিবার", knot: "{date} · গাঁটছড়া বাঁধা",
       sheet_one: "{name} ক্যালেন্ডারে রাখুন", sheet_all: "সব {n}টি অনুষ্ঠান রাখুন",
       sheet_note_one: "Apple, Outlook ও Samsung ক্যালেন্ডারে 1 দিন ও 2 ঘণ্টা আগে রিমাইন্ডার থাকবে।",
       sheet_note_all: "প্রতিটি অনুষ্ঠানের 1 দিন ও 2 ঘণ্টা আগে রিমাইন্ডার। Google Calendar ব্যবহার করেন? প্রতিটি কার্ড থেকে আলাদা করে যোগ করুন, অথবা calendar.google.com-এ ফাইলটি ইমপোর্ট করুন।",
@@ -903,7 +941,7 @@ const CONFIG = {
       daysShort: ["रवि","सोम","मंगल","बुध","गुरु","शुक्र","शनि"],
       dayN: (n) => ["पहला दिन","दूसरा दिन","तीसरा दिन","चौथा दिन","पाँचवाँ दिन"][n - 1] || `दिन ${n}`,
       part: (h) => h < 12 ? "सुबह" : h < 16 ? "दोपहर" : "शाम",
-      time: (h, hm) => `${h < 4 ? "रात" : h < 12 ? "सुबह" : h < 16 ? "दोपहर" : h < 19 ? "शाम" : "रात"} ${hm}`,
+      time: (h, hm) => `${h < 4 ? "रात" : h < 12 ? "सुबह" : h < 16 ? "दोपहर" : h < 20 ? "शाम" : "रात"} ${hm}`,
       dur: (h, m) => [h ? `${h} ${plural(h, "घंटा", "घंटे")}` : "", m ? `${m} मिनट` : ""].filter(Boolean).join(" "),
       days_: (d) => `${d} दिन`
     },
@@ -1010,9 +1048,11 @@ const CONFIG = {
   /* ---------- prepare events ---------- */
   const events = CONFIG.events.map((ev, i) => {
     const startMs = parseIST(ev.date, ev.start);
-    let endMs = parseIST(ev.date, ev.end || ev.start);
-    if (endMs <= startMs) endMs += DAY_MS; // ends after midnight
-    return Object.assign({}, ev, { startMs, endMs, id: "event-" + i, slug: slugify(enOf(ev.name)) });
+    const hasEnd = !!ev.end;
+    // No end time given: show "onwards" on the page; calendar entries last DEFAULT_HOURS.
+    let endMs = hasEnd ? parseIST(ev.date, ev.end) : startMs + DEFAULT_HOURS * 3600000;
+    if (hasEnd && endMs <= startMs) endMs += DAY_MS; // ends after midnight
+    return Object.assign({}, ev, { startMs, endMs, hasEnd, id: "event-" + i, slug: slugify(enOf(ev.name)) });
   }).sort((a, b) => a.startMs - b.startMs);
   const knotIndex = (() => {
     if (events.length < 2) return -1;
@@ -1206,7 +1246,7 @@ const CONFIG = {
           </div>
           <div class="ev-body" id="${ev.id}-body">
             <dl class="facts">
-              <div class="fact"><dt>${T("f_time")}</dt><dd><span class="strong">${fmtTime(ev.startMs)} – ${fmtTime(ev.endMs)}${nextDay ? ` <small>${T("next_day")}</small>` : ""}</span><span class="sub">${fmtDateLong(ev.startMs)}</span><span class="sub">${fmtDuration(ev.endMs - ev.startMs)} · ${T("ist")}</span></dd></div>
+              <div class="fact"><dt>${T("f_time")}</dt><dd><span class="strong">${ev.hasEnd ? `${fmtTime(ev.startMs)} – ${fmtTime(ev.endMs)}${nextDay ? ` <small>${T("next_day")}</small>` : ""}` : T("from_time", { t: fmtTime(ev.startMs) })}</span><span class="sub">${fmtDateLong(ev.startMs)} · ${T("ist")}</span>${ev.hasEnd ? `<span class="sub">${fmtDuration(ev.endMs - ev.startMs)}</span>` : ""}</dd></div>
               <div class="fact"><dt>${T("f_venue")}</dt><dd><span class="strong">${venue}</span><span class="sub">${escHtml(tr(ev.address))}</span></dd></div>
               ${dress ? `<div class="fact"><dt>${T("f_wear")}</dt><dd>${escHtml(dress)}${swatches ? `<span class="swatches" aria-hidden="true">${swatches}</span>` : ""}</dd></div>` : ""}
             </dl>
@@ -1220,6 +1260,16 @@ const CONFIG = {
       </li>`;
     }).join("");
     if (knotIndex > 0) $("#events").children[knotIndex].classList.add("knot-next");
+  }
+
+  function renderParents() {
+    const sec = $("#families"), grid = $("#fam-grid");
+    const list = CONFIG.parents || [];
+    if (!sec || !grid) return;
+    sec.hidden = !list.length;
+    grid.innerHTML = list.map((p, i) =>
+      `${i ? '<div class="fam-heart" aria-hidden="true">♥</div>' : ""}<div class="fam"><p class="fam-lbl">${escHtml(tr(p.label))}</p><p class="fam-names">${(p.names || []).map((n) => `<span>${escHtml(tr(n))}</span>`).join("")}</p></div>`
+    ).join("");
   }
 
   function renderLinks() {
@@ -1264,7 +1314,7 @@ const CONFIG = {
         if (!wasPast) { li.classList.remove("open"); li.querySelector(".ev-toggle").setAttribute("aria-expanded", "false"); }
       } else if (!nextFound) {
         nextFound = true; li.classList.add("is-next");
-        if (t >= ev.startMs) { li.classList.add("is-live"); label = T("happening"); liveText = T("until", { t: fmtTime(ev.endMs) }); }
+        if (t >= ev.startMs) { li.classList.add("is-live"); label = T("happening"); liveText = ev.hasEnd ? T("until", { t: fmtTime(ev.endMs) }) : T("started", { t: fmtTime(ev.startMs) }); }
         else { label = T("up_next"); liveText = T("starts_in", { t: fmtUntil(ev.startMs - t) }); }
       }
       pill.textContent = label;
@@ -1541,6 +1591,7 @@ const CONFIG = {
     ensureFonts(LANG);
     applyStatic();
     renderHeader();
+    renderParents();
     renderEvents();
     renderLinks();
     renderContacts();
